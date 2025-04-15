@@ -4,16 +4,20 @@ import tarfile
 from pathlib import Path
 from unittest.mock import Mock, patch
 
-import polars as pl
 import pytest
 from iden.io import save_text
 
-from grizz.utils.path import (
+from analora.testing import polars_available
+from analora.utils.imports import is_polars_available
+from analora.utils.path import (
     find_files,
     find_parquet_files,
     human_file_size,
     sanitize_path,
 )
+
+if is_polars_available():
+    import polars as pl
 
 #####################################
 #     Tests for human_file_size     #
@@ -27,7 +31,7 @@ def test_human_file_size() -> None:
 def test_human_file_size_2kb() -> None:
     path = Mock(spec=Path, stat=Mock(return_value=Mock(st_size=2048)))
     sanitize_mock = Mock(return_value=path)
-    with patch("grizz.utils.path.sanitize_path", sanitize_mock):
+    with patch("analora.utils.path.sanitize_path", sanitize_mock):
         assert human_file_size(path) == "2.00 KB"
         sanitize_mock.assert_called_once_with(path)
 
@@ -122,6 +126,7 @@ def parquet_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
     return path
 
 
+@polars_available
 def test_find_parquet_files(parquet_path: Path) -> None:
     assert sorted(find_parquet_files(parquet_path)) == [
         parquet_path.joinpath("data.parquet"),
@@ -131,6 +136,7 @@ def test_find_parquet_files(parquet_path: Path) -> None:
     ]
 
 
+@polars_available
 def test_find_parquet_files_recursive_false(parquet_path: Path) -> None:
     assert sorted(find_parquet_files(parquet_path, recursive=False)) == [
         parquet_path.joinpath("data.parquet"),
@@ -138,12 +144,14 @@ def test_find_parquet_files_recursive_false(parquet_path: Path) -> None:
     ]
 
 
+@polars_available
 def test_find_parquet_files_file(parquet_path: Path) -> None:
     assert find_parquet_files(parquet_path.joinpath("subfolder", "sub", "data.parquet")) == [
         parquet_path.joinpath("subfolder", "sub", "data.parquet")
     ]
 
 
+@polars_available
 def test_find_parquet_files_empty(tmp_path: Path) -> None:
     save_text("text", tmp_path.joinpath("file.txt"))
     assert find_parquet_files(tmp_path) == []
