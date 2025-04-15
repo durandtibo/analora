@@ -11,9 +11,8 @@ from typing import TYPE_CHECKING, Any, Generic, TypeVar
 from coola.equality.comparators import BaseEqualityComparator
 from coola.equality.handlers import EqualNanHandler, SameObjectHandler, SameTypeHandler
 from coola.equality.testers import EqualityTester
-from objectory.utils import is_object_config
 
-from analora.utils.imports import is_objectory_available
+from analora.utils.imports import check_objectory, is_objectory_available
 
 if TYPE_CHECKING:
     from coola.equality import EqualityConfig
@@ -21,6 +20,7 @@ if TYPE_CHECKING:
 
 if is_objectory_available():
     from objectory import AbstractFactory
+    from objectory.utils import is_object_config
 else:  # pragma: no cover
     AbstractFactory = ABCMeta
 
@@ -152,6 +152,7 @@ def setup_ingestor(
     """
     if isinstance(ingestor, dict):
         logger.info("Initializing an ingestor from its configuration... ")
+        check_objectory()
         ingestor = BaseIngestor.factory(**ingestor)
     if not isinstance(ingestor, BaseIngestor):
         logger.warning(f"ingestor is not a `BaseIngestor` (received: {type(ingestor)})")
