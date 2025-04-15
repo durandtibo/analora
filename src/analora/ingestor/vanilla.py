@@ -5,14 +5,16 @@ from __future__ import annotations
 __all__ = ["Ingestor"]
 
 
-from typing import Any
+from typing import Any, TypeVar
 
 from coola import objects_are_equal
 
 from analora.ingestor.base import BaseIngestor
 
+T = TypeVar("T")
 
-class Ingestor(BaseIngestor[Any]):
+
+class Ingestor(BaseIngestor[T]):
     r"""Implement a simple data ingestor.
 
     Args:
@@ -31,7 +33,7 @@ class Ingestor(BaseIngestor[Any]):
     ```
     """
 
-    def __init__(self, data: Any) -> None:
+    def __init__(self, data: T) -> None:
         self._data = data
 
     def __repr__(self) -> str:
@@ -42,5 +44,5 @@ class Ingestor(BaseIngestor[Any]):
             return False
         return objects_are_equal(self._data, other._data, equal_nan=equal_nan)
 
-    def ingest(self) -> Any:
+    def ingest(self) -> T:
         return self._data
