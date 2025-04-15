@@ -14,15 +14,15 @@ from coola.equality.testers import EqualityTester
 
 from analora.utils.imports import check_objectory, is_objectory_available
 
-if TYPE_CHECKING:
-    from coola.equality import EqualityConfig
-
-
 if is_objectory_available():
     from objectory import AbstractFactory
     from objectory.utils import is_object_config
 else:  # pragma: no cover
     AbstractFactory = ABCMeta
+
+if TYPE_CHECKING:
+    from coola.equality import EqualityConfig
+
 
 T = TypeVar("T")
 
@@ -30,17 +30,19 @@ logger = logging.getLogger(__name__)
 
 
 class BaseIngestor(ABC, Generic[T], metaclass=AbstractFactory):
-    r"""Define the base class to implement a DataFrame ingestor.
+    r"""Define the base class to implement a data ingestor.
 
     Example usage:
 
     ```pycon
 
-    >>> from analora.ingestor.polars import ParquetIngestor
-    >>> ingestor = ParquetIngestor("/path/to/frame.parquet")
+    >>> from analora.ingestor import Ingestor
+    >>> ingestor = Ingestor([1, 2, 3, 4])
     >>> ingestor
-    ParquetIngestor(source=/path/to/frame.parquet)
-    >>> frame = ingestor.ingest()  # doctest: +SKIP
+    Ingestor()
+    >>> data = ingestor.ingest()
+    >>> data
+    [1, 2, 3, 4]
 
     ```
     """
@@ -61,10 +63,10 @@ class BaseIngestor(ABC, Generic[T], metaclass=AbstractFactory):
 
         ```pycon
 
-        >>> from analora.ingestor.polars import CsvIngestor
-        >>> obj1 = CsvIngestor("/path/to/frame.csv")
-        >>> obj2 = CsvIngestor("/path/to/frame.csv")
-        >>> obj3 = CsvIngestor("/path/to/frame2.csv")
+        >>> from analora.ingestor import Ingestor
+        >>> obj1 = Ingestor([1, 2, 3, 4])
+        >>> obj2 = Ingestor([1, 2, 3, 4])
+        >>> obj3 = Ingestor(["a", "b", "c"])
         >>> obj1.equal(obj2)
         True
         >>> obj1.equal(obj3)
@@ -84,9 +86,11 @@ class BaseIngestor(ABC, Generic[T], metaclass=AbstractFactory):
 
         ```pycon
 
-        >>> from analora.ingestor.polars import ParquetIngestor
-        >>> ingestor = ParquetIngestor("/path/to/frame.parquet")
-        >>> frame = ingestor.ingest()  # doctest: +SKIP
+        >>> from analora.ingestor import Ingestor
+        >>> ingestor = Ingestor([1, 2, 3, 4])
+        >>> data = ingestor.ingest()
+        >>> data
+        [1, 2, 3, 4]
 
         ```
         """
@@ -113,9 +117,7 @@ def is_ingestor_config(config: dict) -> bool:
     ```pycon
 
     >>> from analora.ingestor import is_ingestor_config
-    >>> is_ingestor_config(
-    ...     {"_target_": "analora.ingestor.CsvIngestor", "source": "/path/to/data.csv"}
-    ... )
+    >>> is_ingestor_config({"_target_": "analora.ingestor.Ingestor", "data": [1, 2, 3, 4]})
     True
 
     ```
@@ -143,10 +145,10 @@ def setup_ingestor(
 
     >>> from analora.ingestor import setup_ingestor
     >>> ingestor = setup_ingestor(
-    ...     {"_target_": "analora.ingestor.CsvIngestor", "source": "/path/to/data.csv"}
+    ...     {"_target_": "analora.ingestor.Ingestor", "data": [1, 2, 3, 4]}
     ... )
     >>> ingestor
-    CsvIngestor(source=/path/to/data.csv)
+    Ingestor()
 
     ```
     """
