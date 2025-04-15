@@ -36,6 +36,17 @@ jobs:
         run: |
           python -c "import analora"
 
+      - name: check analora.ingestor
+        run: |
+          python -c "from analora import ingestor"
+      - name: check analora.ingestor.polars
+        run: |
+          python -c "from analora.ingestor import polars"
+
+      - name: check analora.testing
+        run: |
+          python -c "from analora import testing"
+
       - name: check analora.utils
         run: |
           python -c "from analora import utils"
