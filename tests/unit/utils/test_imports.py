@@ -11,6 +11,7 @@ from analora.utils.imports import (
     check_markdown,
     check_objectory,
     check_omegaconf,
+    check_polars,
     check_tqdm,
     colorlog_available,
     hya_available,
@@ -21,10 +22,12 @@ from analora.utils.imports import (
     is_markdown_available,
     is_objectory_available,
     is_omegaconf_available,
+    is_polars_available,
     is_tqdm_available,
     markdown_available,
     objectory_available,
     omegaconf_available,
+    polars_available,
     tqdm_available,
 )
 
@@ -351,6 +354,60 @@ def test_omegaconf_available_decorator_without_package() -> None:
     with patch("analora.utils.imports.is_omegaconf_available", lambda: False):
 
         @omegaconf_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) is None
+
+
+##################
+#     polars     #
+##################
+
+
+def test_check_polars_with_package() -> None:
+    with patch("analora.utils.imports.is_polars_available", lambda: True):
+        check_polars()
+
+
+def test_check_polars_without_package() -> None:
+    with (
+        patch("analora.utils.imports.is_polars_available", lambda: False),
+        pytest.raises(RuntimeError, match="'polars' package is required but not installed."),
+    ):
+        check_polars()
+
+
+def test_is_polars_available() -> None:
+    assert isinstance(is_polars_available(), bool)
+
+
+def test_polars_available_with_package() -> None:
+    with patch("analora.utils.imports.is_polars_available", lambda: True):
+        fn = polars_available(my_function)
+        assert fn(2) == 44
+
+
+def test_polars_available_without_package() -> None:
+    with patch("analora.utils.imports.is_polars_available", lambda: False):
+        fn = polars_available(my_function)
+        assert fn(2) is None
+
+
+def test_polars_available_decorator_with_package() -> None:
+    with patch("analora.utils.imports.is_polars_available", lambda: True):
+
+        @polars_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) == 44
+
+
+def test_polars_available_decorator_without_package() -> None:
+    with patch("analora.utils.imports.is_polars_available", lambda: False):
+
+        @polars_available
         def fn(n: int = 0) -> int:
             return 42 + n
 

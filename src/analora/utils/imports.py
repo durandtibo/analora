@@ -9,6 +9,7 @@ __all__ = [
     "check_markdown",
     "check_objectory",
     "check_omegaconf",
+    "check_polars",
     "check_tqdm",
     "colorlog_available",
     "hya_available",
@@ -19,10 +20,12 @@ __all__ = [
     "is_markdown_available",
     "is_objectory_available",
     "is_omegaconf_available",
+    "is_polars_available",
     "is_tqdm_available",
     "markdown_available",
     "objectory_available",
     "omegaconf_available",
+    "polars_available",
     "tqdm_available",
 ]
 
@@ -486,6 +489,82 @@ def omegaconf_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     ```
     """
     return decorator_package_available(fn, is_omegaconf_available)
+
+
+##################
+#     polars     #
+##################
+
+
+def is_polars_available() -> bool:
+    r"""Indicate if the ``polars`` package is installed or not.
+
+    Returns:
+        ``True`` if ``polars`` is available otherwise
+            ``False``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import is_polars_available
+    >>> is_polars_available()
+
+    ```
+    """
+    return package_available("polars")
+
+
+def check_polars() -> None:
+    r"""Check if the ``polars`` package is installed.
+
+    Raises:
+        RuntimeError: if the ``polars`` package is not
+            installed.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import check_polars
+    >>> check_polars()
+
+    ```
+    """
+    if not is_polars_available():
+        msg = (
+            "'polars' package is required but not installed. "
+            "You can install 'polars' package with the command:\n\n"
+            "pip install polars\n"
+        )
+        raise RuntimeError(msg)
+
+
+def polars_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if ``polars``
+    package is installed.
+
+    Args:
+        fn: The function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``polars`` package is
+            installed, otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import polars_available
+    >>> @polars_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_polars_available)
 
 
 ################
