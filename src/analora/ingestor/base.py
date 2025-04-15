@@ -5,17 +5,24 @@ from __future__ import annotations
 __all__ = ["BaseIngestor", "is_ingestor_config", "setup_ingestor"]
 
 import logging
-from abc import ABC, abstractmethod
+from abc import ABC, ABCMeta, abstractmethod
 from typing import TYPE_CHECKING, Any, Generic, TypeVar
 
 from coola.equality.comparators import BaseEqualityComparator
 from coola.equality.handlers import EqualNanHandler, SameObjectHandler, SameTypeHandler
 from coola.equality.testers import EqualityTester
-from objectory import AbstractFactory
 from objectory.utils import is_object_config
+
+from analora.utils.imports import is_objectory_available
 
 if TYPE_CHECKING:
     from coola.equality import EqualityConfig
+
+
+if is_objectory_available():
+    from objectory import AbstractFactory
+else:  # pragma: no cover
+    AbstractFactory = ABCMeta
 
 T = TypeVar("T")
 
