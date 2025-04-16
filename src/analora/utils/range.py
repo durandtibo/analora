@@ -32,7 +32,7 @@ def find_range(
     ```pycon
 
     >>> import numpy as np
-    >>> from arkas.utils.range import find_range
+    >>> from analora.utils.range import find_range
     >>> data = np.arange(101)
     >>> find_range(data)
     (0, 100)
