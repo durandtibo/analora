@@ -1,6 +1,16 @@
 from __future__ import annotations
 
-from analora.utils.html import render_toc, tags2id, tags2title, valid_h_tag
+import pytest
+from matplotlib import pyplot as plt
+
+from analora.utils.html import (
+    MISSING_FIGURE_MESSAGE,
+    figure2html,
+    render_toc,
+    tags2id,
+    tags2title,
+    valid_h_tag,
+)
 
 #############################
 #     Tests for tags2id     #
@@ -83,3 +93,29 @@ def test_render_toc_tags_without_number() -> None:
 
 def test_render_toc_max_depth() -> None:
     assert render_toc(depth=2, max_depth=2) == ""
+
+
+#################################
+#     Tests for figure2html     #
+#################################
+
+
+def test_figure2html() -> None:
+    fig, _ = plt.subplots()
+    assert isinstance(figure2html(fig), str)
+
+
+@pytest.mark.parametrize("close_fig", [True, False])
+def test_figure2html_close_fig(close_fig: bool) -> None:
+    fig, _ = plt.subplots()
+    assert isinstance(figure2html(fig, close_fig=close_fig), str)
+
+
+@pytest.mark.parametrize("reactive", [True, False])
+def test_figure2html_reactive(reactive: bool) -> None:
+    fig, _ = plt.subplots()
+    assert isinstance(figure2html(fig, reactive=reactive), str)
+
+
+def test_figure2html_none() -> None:
+    assert figure2html(None) == MISSING_FIGURE_MESSAGE

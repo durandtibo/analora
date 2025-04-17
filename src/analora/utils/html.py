@@ -4,18 +4,27 @@ from __future__ import annotations
 
 __all__ = [
     "GO_TO_TOP",
+    "MISSING_FIGURE_MESSAGE",
+    "figure2html",
     "render_toc",
     "tags2id",
     "tags2title",
     "valid_h_tag",
 ]
 
+import base64
+import io
 from typing import TYPE_CHECKING
+
+from matplotlib import pyplot as plt
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
 GO_TO_TOP = '<a href="#">Go to top</a>'
+MISSING_FIGURE_MESSAGE = (
+    "<span>&#9888;</span> No figure is generated because of missing or incorrect data"
+)
 
 
 def tags2id(tags: Sequence[str]) -> str:
@@ -117,3 +126,41 @@ def render_toc(
         return ""
     tag = tags[-1] if tags else ""
     return f'<li><a href="#{tags2id(tags)}">{number} {tag}</a></li>'
+
+
+def figure2html(fig: plt.Figure | None, reactive: bool = True, close_fig: bool = False) -> str:
+    r"""Convert a matplotlib figure to a string that can be used in a
+    HTML file.
+
+    Args:
+        fig: The figure to convert.
+        reactive: If ``True``, the generated is configured to be
+            reactive to the screen size.
+        close_fig: If ``True``, the figure is closed after it is
+            converted to HTML format.
+
+    Returns:
+        The converted figure to a string.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from matplotlib import pyplot as plt
+    >>> from analora.utils.html import figure2html
+    >>> fig, ax = plt.subplots()
+    >>> string = figure2html(fig)
+
+    ```
+    """
+    if fig is None:
+        return MISSING_FIGURE_MESSAGE
+    fig.tight_layout()
+    img = io.BytesIO()
+    fig.savefig(img, format="png", bbox_inches="tight")
+    img.seek(0)
+    data = base64.b64encode(img.getvalue()).decode("utf-8")
+    if close_fig:
+        plt.close(fig)
+    style = 'style="width:100%; height:auto;" ' if reactive else ""
+    return f'<img {style}src="data:image/png;charset=utf-8;base64, {data}">'
