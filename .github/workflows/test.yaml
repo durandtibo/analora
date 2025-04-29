@@ -3,6 +3,9 @@ on:
   workflow_call:
   workflow_dispatch:  # to trigger manually
 
+permissions:
+  contents: read
+
 jobs:
   all:
     runs-on: ${{ matrix.os }}
@@ -22,6 +25,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
+          activate-environment: true
 
       - name: Install invoke
         run: |
@@ -62,6 +66,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
+          activate-environment: true
 
       - name: Install invoke
         run: |
