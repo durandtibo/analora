@@ -10,6 +10,7 @@ __all__ = [
     "check_objectory",
     "check_omegaconf",
     "check_polars",
+    "check_scipy",
     "check_tqdm",
     "colorlog_available",
     "hya_available",
@@ -21,11 +22,13 @@ __all__ = [
     "is_objectory_available",
     "is_omegaconf_available",
     "is_polars_available",
+    "is_scipy_available",
     "is_tqdm_available",
     "markdown_available",
     "objectory_available",
     "omegaconf_available",
     "polars_available",
+    "scipy_available",
     "tqdm_available",
 ]
 
@@ -565,6 +568,82 @@ def polars_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     ```
     """
     return decorator_package_available(fn, is_polars_available)
+
+
+#################
+#     scipy     #
+#################
+
+
+def is_scipy_available() -> bool:
+    r"""Indicate if the ``scipy`` package is installed or not.
+
+    Returns:
+        ``True`` if ``scipy`` is available otherwise
+            ``False``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import is_scipy_available
+    >>> is_scipy_available()
+
+    ```
+    """
+    return package_available("scipy")
+
+
+def check_scipy() -> None:
+    r"""Check if the ``scipy`` package is installed.
+
+    Raises:
+        RuntimeError: if the ``scipy`` package is not
+            installed.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import check_scipy
+    >>> check_scipy()
+
+    ```
+    """
+    if not is_scipy_available():
+        msg = (
+            "'scipy' package is required but not installed. "
+            "You can install 'scipy' package with the command:\n\n"
+            "pip install scipy\n"
+        )
+        raise RuntimeError(msg)
+
+
+def scipy_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if ``scipy``
+    package is installed.
+
+    Args:
+        fn: The function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``scipy`` package is
+            installed, otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.imports import scipy_available
+    >>> @scipy_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_scipy_available)
 
 
 ################
