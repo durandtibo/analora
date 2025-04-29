@@ -7,6 +7,7 @@ __all__ = ["binary_precision_recall_curve"]
 from typing import TYPE_CHECKING, Any
 
 import matplotlib.pyplot as plt
+
 from analora import plot
 from analora.metric.utils import check_same_shape_pred
 

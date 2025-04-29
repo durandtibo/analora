@@ -3,8 +3,8 @@ from __future__ import annotations
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
-from analora.metric import root_mean_squared_error
 
+from analora.metric import root_mean_squared_error
 from tests.conftest import sklearn_greater_equal_1_4
 
 #############################################

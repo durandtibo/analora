@@ -13,13 +13,14 @@ __all__ = [
 import math
 
 import numpy as np
+from sklearn import metrics
+
 from analora.metric.utils import (
     check_label_type,
     contains_nan,
     preprocess_pred,
     preprocess_pred_multilabel,
 )
-from sklearn import metrics
 
 
 def precision(

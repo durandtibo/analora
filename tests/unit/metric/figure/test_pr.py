@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import numpy as np
-from analora.metric.figure import binary_precision_recall_curve
 from matplotlib import pyplot as plt
+
+from analora.metric.figure import binary_precision_recall_curve
 
 ###################################################
 #     Tests for binary_precision_recall_curve     #

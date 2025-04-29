@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 from coola import objects_are_equal
+
 from analora.metric import (
     binary_top_k_accuracy,
     multiclass_top_k_accuracy,

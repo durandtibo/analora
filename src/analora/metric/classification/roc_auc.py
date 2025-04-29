@@ -13,6 +13,8 @@ __all__ = [
 from typing import Any
 
 import numpy as np
+from sklearn import metrics
+
 from analora.metric.classification.ap import find_label_type
 from analora.metric.utils import (
     check_label_type,
@@ -21,7 +23,6 @@ from analora.metric.utils import (
     preprocess_score_multiclass,
     preprocess_score_multilabel,
 )
-from sklearn import metrics
 
 
 def roc_auc(

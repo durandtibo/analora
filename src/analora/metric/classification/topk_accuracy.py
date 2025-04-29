@@ -7,12 +7,13 @@ __all__ = ["binary_top_k_accuracy", "multiclass_top_k_accuracy", "top_k_accuracy
 
 from typing import TYPE_CHECKING
 
+from sklearn import metrics
+
 from analora.metric.utils import (
     contains_nan,
     preprocess_score_binary,
     preprocess_score_multiclass,
 )
-from sklearn import metrics
 
 if TYPE_CHECKING:
     from collections.abc import Sequence

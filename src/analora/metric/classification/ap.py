@@ -12,6 +12,8 @@ __all__ = [
 
 
 import numpy as np
+from sklearn import metrics
+
 from analora.metric.utils import (
     check_label_type,
     contains_nan,
@@ -19,7 +21,6 @@ from analora.metric.utils import (
     preprocess_score_multiclass,
     preprocess_score_multilabel,
 )
-from sklearn import metrics
 
 
 def average_precision(

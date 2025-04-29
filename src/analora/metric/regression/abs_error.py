@@ -7,8 +7,9 @@ __all__ = ["mean_absolute_error", "median_absolute_error"]
 
 from typing import TYPE_CHECKING
 
-from analora.metric.utils import contains_nan, preprocess_pred
 from sklearn import metrics
+
+from analora.metric.utils import contains_nan, preprocess_pred
 
 if TYPE_CHECKING:
     import numpy as np

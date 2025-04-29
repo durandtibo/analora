@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 from coola import objects_are_allclose
+
 from analora.metric import energy_distance
 from analora.testing import scipy_available
 

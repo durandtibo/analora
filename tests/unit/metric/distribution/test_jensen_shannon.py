@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 from coola import objects_are_allclose
+
 from analora.metric import jensen_shannon_divergence
 from analora.testing import scipy_available
 

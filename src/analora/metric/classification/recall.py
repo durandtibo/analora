@@ -11,6 +11,8 @@ __all__ = [
 
 
 import numpy as np
+from sklearn import metrics
+
 from analora.metric.classification.precision import find_label_type
 from analora.metric.utils import (
     check_label_type,
@@ -18,7 +20,6 @@ from analora.metric.utils import (
     preprocess_pred,
     preprocess_pred_multilabel,
 )
-from sklearn import metrics
 
 
 def recall(

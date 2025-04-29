@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 from coola import objects_are_equal
+
 from analora.metric.utils import (
     check_array_ndim,
     check_label_type,

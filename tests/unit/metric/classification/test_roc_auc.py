@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
+
 from analora.metric import (
     binary_roc_auc,
     multiclass_roc_auc,

@@ -8,12 +8,13 @@ __all__ = ["ndcg"]
 
 from typing import TYPE_CHECKING
 
+from sklearn.metrics import ndcg_score
+
 from analora.metric.utils import (
     check_array_ndim,
     contains_nan,
     preprocess_score_multilabel,
 )
-from sklearn.metrics import ndcg_score
 
 if TYPE_CHECKING:
     import numpy as np
