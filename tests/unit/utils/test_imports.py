@@ -12,6 +12,7 @@ from analora.utils.imports import (
     check_objectory,
     check_omegaconf,
     check_polars,
+    check_scipy,
     check_tqdm,
     colorlog_available,
     hya_available,
@@ -23,11 +24,13 @@ from analora.utils.imports import (
     is_objectory_available,
     is_omegaconf_available,
     is_polars_available,
+    is_scipy_available,
     is_tqdm_available,
     markdown_available,
     objectory_available,
     omegaconf_available,
     polars_available,
+    scipy_available,
     tqdm_available,
 )
 
@@ -408,6 +411,60 @@ def test_polars_available_decorator_without_package() -> None:
     with patch("analora.utils.imports.is_polars_available", lambda: False):
 
         @polars_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) is None
+
+
+#################
+#     scipy     #
+#################
+
+
+def test_check_scipy_with_package() -> None:
+    with patch("analora.utils.imports.is_scipy_available", lambda: True):
+        check_scipy()
+
+
+def test_check_scipy_without_package() -> None:
+    with (
+        patch("analora.utils.imports.is_scipy_available", lambda: False),
+        pytest.raises(RuntimeError, match="'scipy' package is required but not installed."),
+    ):
+        check_scipy()
+
+
+def test_is_scipy_available() -> None:
+    assert isinstance(is_scipy_available(), bool)
+
+
+def test_scipy_available_with_package() -> None:
+    with patch("analora.utils.imports.is_scipy_available", lambda: True):
+        fn = scipy_available(my_function)
+        assert fn(2) == 44
+
+
+def test_scipy_available_without_package() -> None:
+    with patch("analora.utils.imports.is_scipy_available", lambda: False):
+        fn = scipy_available(my_function)
+        assert fn(2) is None
+
+
+def test_scipy_available_decorator_with_package() -> None:
+    with patch("analora.utils.imports.is_scipy_available", lambda: True):
+
+        @scipy_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) == 44
+
+
+def test_scipy_available_decorator_without_package() -> None:
+    with patch("analora.utils.imports.is_scipy_available", lambda: False):
+
+        @scipy_available
         def fn(n: int = 0) -> int:
             return 42 + n
 
