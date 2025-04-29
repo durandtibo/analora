@@ -3,6 +3,9 @@ on:
   workflow_call:
   workflow_dispatch:  # to trigger manually
 
+permissions:
+  contents: read
+
 jobs:
   cyclic-import:
     runs-on: ubuntu-latest
@@ -15,6 +18,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           python-version: 3.13
+          activate-environment: true
 
       - name: Install invoke
         run: |
