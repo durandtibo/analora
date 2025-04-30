@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 from sklearn import metrics
 
 from analora.metric.utils import contains_nan, preprocess_pred
+from analora.utils.imports import check_sklearn
 
 if TYPE_CHECKING:
     import numpy as np
@@ -48,6 +49,7 @@ def balanced_accuracy(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )

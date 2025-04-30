@@ -7,10 +7,11 @@ __all__ = ["binary_roc_curve"]
 
 from typing import TYPE_CHECKING, Any
 
-from sklearn.metrics import RocCurveDisplay
-
 from analora.metric.utils import preprocess_score_binary
-from analora.utils.imports import check_sklearn
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn.metrics import RocCurveDisplay
 
 if TYPE_CHECKING:
     import numpy as np
