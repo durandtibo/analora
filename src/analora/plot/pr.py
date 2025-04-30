@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 from analora.metric.utils import preprocess_pred
 from analora.utils.imports import check_sklearn, is_sklearn_available
 
-if is_sklearn_available():
+if is_sklearn_available():  # pragma: no cover
     from sklearn.metrics import PrecisionRecallDisplay
 
 if TYPE_CHECKING:
