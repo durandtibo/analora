@@ -5,6 +5,8 @@ from __future__ import annotations
 __all__ = [
     "bar_discrete",
     "bar_discrete_temporal",
+    "binary_precision_recall_curve",
+    "binary_roc_curve",
     "boxplot_continuous",
     "boxplot_continuous_temporal",
     "hist_continuous",
@@ -22,3 +24,5 @@ from analora.plot.continuous import (
 )
 from analora.plot.discrete import bar_discrete, bar_discrete_temporal
 from analora.plot.null_temporal import plot_null_temporal
+from analora.plot.pr import binary_precision_recall_curve
+from analora.plot.roc import binary_roc_curve
