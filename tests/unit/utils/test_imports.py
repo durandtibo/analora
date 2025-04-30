@@ -13,6 +13,7 @@ from analora.utils.imports import (
     check_omegaconf,
     check_polars,
     check_scipy,
+    check_sklearn,
     check_tqdm,
     colorlog_available,
     hya_available,
@@ -25,12 +26,14 @@ from analora.utils.imports import (
     is_omegaconf_available,
     is_polars_available,
     is_scipy_available,
+    is_sklearn_available,
     is_tqdm_available,
     markdown_available,
     objectory_available,
     omegaconf_available,
     polars_available,
     scipy_available,
+    sklearn_available,
     tqdm_available,
 )
 
@@ -465,6 +468,60 @@ def test_scipy_available_decorator_without_package() -> None:
     with patch("analora.utils.imports.is_scipy_available", lambda: False):
 
         @scipy_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) is None
+
+
+###################
+#     sklearn     #
+###################
+
+
+def test_check_sklearn_with_package() -> None:
+    with patch("analora.utils.imports.is_sklearn_available", lambda: True):
+        check_sklearn()
+
+
+def test_check_sklearn_without_package() -> None:
+    with (
+        patch("analora.utils.imports.is_sklearn_available", lambda: False),
+        pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."),
+    ):
+        check_sklearn()
+
+
+def test_is_sklearn_available() -> None:
+    assert isinstance(is_sklearn_available(), bool)
+
+
+def test_sklearn_available_with_package() -> None:
+    with patch("analora.utils.imports.is_sklearn_available", lambda: True):
+        fn = sklearn_available(my_function)
+        assert fn(2) == 44
+
+
+def test_sklearn_available_without_package() -> None:
+    with patch("analora.utils.imports.is_sklearn_available", lambda: False):
+        fn = sklearn_available(my_function)
+        assert fn(2) is None
+
+
+def test_sklearn_available_decorator_with_package() -> None:
+    with patch("analora.utils.imports.is_sklearn_available", lambda: True):
+
+        @sklearn_available
+        def fn(n: int = 0) -> int:
+            return 42 + n
+
+        assert fn(2) == 44
+
+
+def test_sklearn_available_decorator_without_package() -> None:
+    with patch("analora.utils.imports.is_sklearn_available", lambda: False):
+
+        @sklearn_available
         def fn(n: int = 0) -> int:
             return 42 + n
 
