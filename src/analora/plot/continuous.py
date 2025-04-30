@@ -65,7 +65,7 @@ def boxplot_continuous(
     ax.boxplot(
         array,
         notch=True,
-        vert=False,
+        orientation="vertical",
         widths=0.7,
         patch_artist=True,
         boxprops={"facecolor": "lightblue"},
@@ -127,7 +127,7 @@ def boxplot_continuous_temporal(
     ax.boxplot(
         data,
         notch=True,
-        vert=True,
+        orientation="vertical",
         widths=0.7,
         patch_artist=True,
         boxprops={"facecolor": "lightblue"},
