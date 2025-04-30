@@ -6,9 +6,11 @@ __all__ = ["binary_precision_recall_curve"]
 
 from typing import TYPE_CHECKING, Any
 
-from sklearn.metrics import PrecisionRecallDisplay
-
 from analora.metric.utils import preprocess_pred
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():
+    from sklearn.metrics import PrecisionRecallDisplay
 
 if TYPE_CHECKING:
     import numpy as np
@@ -44,5 +46,6 @@ def binary_precision_recall_curve(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=True)
     PrecisionRecallDisplay.from_predictions(y_true=y_true, y_pred=y_pred, ax=ax, **kwargs)
