@@ -11,6 +11,7 @@ __all__ = [
     "omegaconf_available",
     "polars_available",
     "scipy_available",
+    "sklearn_available",
     "tqdm_available",
 ]
 
@@ -23,5 +24,6 @@ from analora.testing.fixtures import (
     omegaconf_available,
     polars_available,
     scipy_available,
+    sklearn_available,
     tqdm_available,
 )

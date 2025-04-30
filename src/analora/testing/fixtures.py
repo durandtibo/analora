@@ -11,6 +11,7 @@ __all__ = [
     "omegaconf_available",
     "polars_available",
     "scipy_available",
+    "sklearn_available",
     "tqdm_available",
 ]
 
@@ -25,6 +26,7 @@ from analora.utils.imports import (
     is_omegaconf_available,
     is_polars_available,
     is_scipy_available,
+    is_sklearn_available,
     is_tqdm_available,
 )
 
@@ -36,4 +38,5 @@ objectory_available = pytest.mark.skipif(not is_objectory_available(), reason="R
 omegaconf_available = pytest.mark.skipif(not is_omegaconf_available(), reason="requires omegaconf")
 polars_available = pytest.mark.skipif(not is_polars_available(), reason="requires polars")
 scipy_available = pytest.mark.skipif(not is_scipy_available(), reason="requires scipy")
+sklearn_available = pytest.mark.skipif(not is_sklearn_available(), reason="requires sklearn")
 tqdm_available = pytest.mark.skipif(not is_tqdm_available(), reason="requires tqdm")
