@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Any
 from sklearn.metrics import RocCurveDisplay
 
 from analora.metric.utils import preprocess_score_binary
+from analora.utils.imports import check_sklearn
 
 if TYPE_CHECKING:
     import numpy as np
@@ -45,6 +46,7 @@ def binary_roc_curve(ax: Axes, y_true: np.ndarray, y_score: np.ndarray, **kwargs
 
     ```
     """
+    check_sklearn()
     y_true, y_score = preprocess_score_binary(
         y_true=y_true.ravel(), y_score=y_score.ravel(), drop_nan=True
     )
