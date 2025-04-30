@@ -7,10 +7,11 @@ __all__ = ["balanced_accuracy"]
 
 from typing import TYPE_CHECKING
 
-from sklearn import metrics
-
 from analora.metric.utils import contains_nan, preprocess_pred
-from analora.utils.imports import check_sklearn
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 if TYPE_CHECKING:
     import numpy as np
