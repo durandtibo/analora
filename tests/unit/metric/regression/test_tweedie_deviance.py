@@ -1,16 +1,20 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_equal
 
 from analora.metric import mean_tweedie_deviance
+from analora.testing import sklearn_available
 
 ###########################################
 #     Tests for mean_tweedie_deviance     #
 ###########################################
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_correct() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(y_true=np.array([1, 2, 3, 4, 5]), y_pred=np.array([1, 2, 3, 4, 5])),
@@ -18,6 +22,7 @@ def test_mean_tweedie_deviance_correct() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_correct_2d() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -27,6 +32,7 @@ def test_mean_tweedie_deviance_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_incorrect() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(y_true=np.array([4, 3, 2, 1]), y_pred=np.array([1, 2, 3, 4])),
@@ -34,6 +40,7 @@ def test_mean_tweedie_deviance_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_powers() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -48,6 +55,7 @@ def test_mean_tweedie_deviance_powers() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_empty() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(y_true=np.array([]), y_pred=np.array([])),
@@ -56,6 +64,7 @@ def test_mean_tweedie_deviance_empty() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_prefix_suffix() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -68,6 +77,7 @@ def test_mean_tweedie_deviance_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_omit() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -79,6 +89,7 @@ def test_mean_tweedie_deviance_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_omit_y_true() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -90,6 +101,7 @@ def test_mean_tweedie_deviance_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_omit_y_pred() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -101,6 +113,7 @@ def test_mean_tweedie_deviance_nan_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_propagate() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -113,6 +126,7 @@ def test_mean_tweedie_deviance_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -125,6 +139,7 @@ def test_mean_tweedie_deviance_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_propagate_y_pred() -> None:
     assert objects_are_equal(
         mean_tweedie_deviance(
@@ -137,6 +152,7 @@ def test_mean_tweedie_deviance_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         mean_tweedie_deviance(
@@ -146,6 +162,7 @@ def test_mean_tweedie_deviance_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         mean_tweedie_deviance(
@@ -155,6 +172,7 @@ def test_mean_tweedie_deviance_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_mean_tweedie_deviance_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         mean_tweedie_deviance(
@@ -162,3 +180,9 @@ def test_mean_tweedie_deviance_nan_raise_y_pred() -> None:
             y_pred=np.array([1, 2, 3, 4, 5, float("nan")]),
             nan_policy="raise",
         )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_mean_tweedie_deviance_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        mean_tweedie_deviance(y_true=np.array([1, 2, 3, 4, 5]), y_pred=np.array([1, 2, 3, 4, 5]))
