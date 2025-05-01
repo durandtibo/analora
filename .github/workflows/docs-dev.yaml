@@ -1,45 +1,15 @@
-name: Documentation Tests
+name: Documentation (unstable)
 on:
   workflow_call:
   workflow_dispatch:  # to trigger manually
+  push:
+    branches:
+      - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  doctest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
-        with:
-          python-version: 3.13
-          activate-environment: true
-
-      - name: Install invoke
-        run: |
-          make install-invoke
-
-      - name: Install packages
-        run: |
-          inv install --all-deps
-
-      - name: Show python config
-        run: |
-          inv show-python-config
-
-      - name: Show installed packages
-        run: |
-          inv show-installed-packages
-
-      - name: Run doctest on source code
-        run: |
-          inv doctest-src
-
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -75,7 +45,8 @@ jobs:
         run: |
           git config --global user.name ci-docs-bot
           git config --global user.email $CI_BOT_EMAIL
+          git fetch origin gh-pages --depth=1 --tags
 
-      - name: Build documentation
+      - name: Build and deploy documentation
         run: |
-          mike deploy --config-file docs/mkdocs.yml --branch tmp-doc-build-1234 dev
+          inv publish-doc-dev
