@@ -12,7 +12,6 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 import numpy as np
-from sklearn import metrics
 
 from analora.metric.classification.precision import find_label_type
 from analora.metric.utils import (
@@ -21,6 +20,10 @@ from analora.metric.utils import (
     preprocess_pred,
     preprocess_pred_multilabel,
 )
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -181,6 +184,7 @@ def binary_fbeta_score(
     for beta in betas:
         score = float("nan")
         if count > 0 and not y_true_nan and not y_pred_nan:
+            check_sklearn()
             score = float(metrics.fbeta_score(y_true=y_true, y_pred=y_pred, beta=beta))
         out[f"{prefix}f{beta}{suffix}"] = score
     return out
@@ -230,6 +234,7 @@ def multiclass_fbeta_score(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )
@@ -309,6 +314,7 @@ def multilabel_fbeta_score(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred_multilabel(y_true, y_pred, drop_nan=nan_policy == "omit")
     y_true_nan = contains_nan(arr=y_true, nan_policy=nan_policy, name="'y_true'")
     y_pred_nan = contains_nan(arr=y_pred, nan_policy=nan_policy, name="'y_pred'")
