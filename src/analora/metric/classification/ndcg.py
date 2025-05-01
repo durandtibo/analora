@@ -8,13 +8,15 @@ __all__ = ["ndcg"]
 
 from typing import TYPE_CHECKING
 
-from sklearn.metrics import ndcg_score
-
 from analora.metric.utils import (
     check_array_ndim,
     contains_nan,
     preprocess_score_multilabel,
 )
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn.metrics import ndcg_score
 
 if TYPE_CHECKING:
     import numpy as np
@@ -68,6 +70,7 @@ def ndcg(
 
     ```
     """
+    check_sklearn()
     check_array_ndim(y_true, ndim=2)
     y_true, y_score = preprocess_score_multilabel(
         y_true=y_true, y_score=y_score, drop_nan=nan_policy == "omit"
