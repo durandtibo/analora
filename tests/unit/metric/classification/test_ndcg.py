@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose
 
 from analora.metric import ndcg
-from analora.testing import scipy_available
+from analora.testing import scipy_available, sklearn_available
 
 ##########################
 #     Tests for ndcg     #
@@ -13,6 +15,7 @@ from analora.testing import scipy_available
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_correct() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -24,6 +27,7 @@ def test_ndcg_correct() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_different() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -35,6 +39,7 @@ def test_ndcg_different() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_empty() -> None:
     assert objects_are_allclose(
         ndcg(y_true=np.ones((0, 0)), y_score=np.ones((0, 0))),
@@ -44,6 +49,7 @@ def test_ndcg_empty() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_prefix_suffix() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -57,6 +63,7 @@ def test_ndcg_prefix_suffix() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_omit() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -71,6 +78,7 @@ def test_ndcg_nan_omit() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_omit_y_true() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -83,6 +91,7 @@ def test_ndcg_omit_y_true() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_omit_y_score() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -97,6 +106,7 @@ def test_ndcg_omit_y_score() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_propagate() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -111,6 +121,7 @@ def test_ndcg_nan_propagate() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -123,6 +134,7 @@ def test_ndcg_nan_propagate_y_true() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_propagate_y_score() -> None:
     assert objects_are_allclose(
         ndcg(
@@ -137,6 +149,7 @@ def test_ndcg_nan_propagate_y_score() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         ndcg(
@@ -149,6 +162,7 @@ def test_ndcg_nan_raise() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         ndcg(
@@ -159,6 +173,7 @@ def test_ndcg_nan_raise_y_true() -> None:
 
 
 @scipy_available
+@sklearn_available
 def test_ndcg_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         ndcg(
@@ -167,4 +182,13 @@ def test_ndcg_nan_raise_y_score() -> None:
                 [[float("nan"), 1.0, 0.0], [0.0, 1.0, -1.0], [0.0, 0.0, 1.0], [1.0, 2.0, 3.0]]
             ),
             nan_policy="raise",
+        )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_ndcg_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        ndcg(
+            y_true=np.array([[1, 0, 0], [1, 2, 0], [1, 1, 2], [0, 0, 1]]),
+            y_score=np.array([[2.0, 1.0, 0.0], [0.0, 1.0, -1.0], [0.0, 0.0, 1.0], [1.0, 2.0, 3.0]]),
         )
