@@ -193,6 +193,12 @@ def test_top_k_accuracy_multiclass_nan_raise() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_top_k_accuracy_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        top_k_accuracy(y_true=np.array([1, 0, 0, 1, 1]), y_score=np.array([2, -1, 0, 3, 1]), k=[1])
+
+
 ###########################################
 #     Tests for binary_top_k_accuracy     #
 ###########################################

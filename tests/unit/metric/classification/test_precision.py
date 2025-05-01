@@ -322,6 +322,12 @@ def test_precision_label_type_incorrect() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_precision_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        precision(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1]))
+
+
 ######################################
 #     Tests for binary_precision     #
 ######################################

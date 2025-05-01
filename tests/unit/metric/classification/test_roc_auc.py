@@ -384,6 +384,12 @@ def test_roc_auc_label_type_incorrect() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_roc_auc_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        roc_auc(y_true=np.array([1, 0, 0, 1, 1]), y_score=np.array([2, -1, 0, 3, 1]))
+
+
 ####################################
 #     Tests for binary_roc_auc     #
 ####################################
