@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
@@ -10,12 +12,14 @@ from analora.metric import (
     multiclass_confusion_matrix,
     multilabel_confusion_matrix,
 )
+from analora.testing import sklearn_available
 
 ######################################
 #     Tests for confusion_matrix     #
 ######################################
 
 
+@sklearn_available
 def test_confusion_matrix_binary_auto_binary() -> None:
     assert objects_are_equal(
         confusion_matrix(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1])),
@@ -34,6 +38,7 @@ def test_confusion_matrix_binary_auto_binary() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_binary() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -54,6 +59,7 @@ def test_confusion_matrix_binary() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_binary_prefix_suffix() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -78,6 +84,7 @@ def test_confusion_matrix_binary_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_binary_nan_omit() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -101,6 +108,7 @@ def test_confusion_matrix_binary_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_binary_nan_propagate() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -127,6 +135,7 @@ def test_confusion_matrix_binary_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_binary_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         confusion_matrix(
@@ -137,6 +146,7 @@ def test_confusion_matrix_binary_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_confusion_matrix_multiclass() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -151,6 +161,7 @@ def test_confusion_matrix_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multiclass_prefix_suffix() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -167,6 +178,7 @@ def test_confusion_matrix_multiclass_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multiclass_nan_omit() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -182,6 +194,7 @@ def test_confusion_matrix_multiclass_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multiclass_nan_propagate() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -197,6 +210,7 @@ def test_confusion_matrix_multiclass_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multiclass_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         confusion_matrix(
@@ -207,6 +221,7 @@ def test_confusion_matrix_multiclass_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_confusion_matrix_auto_multilabel() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -220,6 +235,7 @@ def test_confusion_matrix_auto_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multilabel() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -234,6 +250,7 @@ def test_confusion_matrix_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multilabel_prefix_suffix() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -252,6 +269,7 @@ def test_confusion_matrix_multilabel_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multilabel_nan_omit() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -271,6 +289,7 @@ def test_confusion_matrix_multilabel_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multilabel_nan_propagate() -> None:
     assert objects_are_equal(
         confusion_matrix(
@@ -290,6 +309,7 @@ def test_confusion_matrix_multilabel_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_confusion_matrix_multilabel_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         confusion_matrix(
@@ -304,6 +324,7 @@ def test_confusion_matrix_multilabel_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_confusion_matrix_label_type_incorrect() -> None:
     with pytest.raises(ValueError, match="Incorrect 'label_type': incorrect"):
         confusion_matrix(
@@ -318,6 +339,7 @@ def test_confusion_matrix_label_type_incorrect() -> None:
 #############################################
 
 
+@sklearn_available
 def test_binary_confusion_matrix_correct_1d() -> None:
     assert objects_are_equal(
         binary_confusion_matrix(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1])),
@@ -336,6 +358,7 @@ def test_binary_confusion_matrix_correct_1d() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_correct_2d() -> None:
     assert objects_are_equal(
         binary_confusion_matrix(
@@ -356,6 +379,7 @@ def test_binary_confusion_matrix_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_incorrect() -> None:
     assert objects_are_equal(
         binary_confusion_matrix(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([0, 1, 1, 0, 0])),
@@ -374,6 +398,7 @@ def test_binary_confusion_matrix_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_empty() -> None:
     assert objects_are_equal(
         binary_confusion_matrix(y_true=np.array([]), y_pred=np.array([])),
@@ -393,6 +418,7 @@ def test_binary_confusion_matrix_empty() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_correct_prefix_suffix() -> None:
     assert objects_are_equal(
         binary_confusion_matrix(
@@ -416,6 +442,7 @@ def test_binary_confusion_matrix_correct_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_omit() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -438,6 +465,7 @@ def test_binary_confusion_matrix_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_omit_y_true() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -460,6 +488,7 @@ def test_binary_confusion_matrix_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_omit_y_pred() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -482,6 +511,7 @@ def test_binary_confusion_matrix_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_propagate() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -506,6 +536,7 @@ def test_binary_confusion_matrix_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -530,6 +561,7 @@ def test_binary_confusion_matrix_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         binary_confusion_matrix(
@@ -554,6 +586,7 @@ def test_binary_confusion_matrix_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_confusion_matrix(
@@ -563,6 +596,7 @@ def test_binary_confusion_matrix_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_confusion_matrix(
@@ -572,6 +606,7 @@ def test_binary_confusion_matrix_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_binary_confusion_matrix_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         binary_confusion_matrix(
@@ -581,11 +616,18 @@ def test_binary_confusion_matrix_nan_raise_y_pred() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_binary_confusion_matrix_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        binary_confusion_matrix(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1]))
+
+
 #################################################
 #     Tests for multiclass_confusion_matrix     #
 #################################################
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_correct_1d() -> None:
     assert objects_are_equal(
         multiclass_confusion_matrix(
@@ -598,6 +640,7 @@ def test_multiclass_confusion_matrix_correct_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_correct_2d() -> None:
     assert objects_are_equal(
         multiclass_confusion_matrix(
@@ -610,6 +653,7 @@ def test_multiclass_confusion_matrix_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_incorrect() -> None:
     assert objects_are_equal(
         multiclass_confusion_matrix(
@@ -622,6 +666,7 @@ def test_multiclass_confusion_matrix_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_empty() -> None:
     assert objects_are_equal(
         multiclass_confusion_matrix(y_true=np.array([]), y_pred=np.array([])),
@@ -632,6 +677,7 @@ def test_multiclass_confusion_matrix_empty() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_correct_prefix_suffix() -> None:
     assert objects_are_equal(
         multiclass_confusion_matrix(
@@ -647,6 +693,7 @@ def test_multiclass_confusion_matrix_correct_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_omit() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -661,6 +708,7 @@ def test_multiclass_confusion_matrix_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_omit_y_true() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -675,6 +723,7 @@ def test_multiclass_confusion_matrix_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_omit_y_pred() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -689,6 +738,7 @@ def test_multiclass_confusion_matrix_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_propagate() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -702,6 +752,7 @@ def test_multiclass_confusion_matrix_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -715,6 +766,7 @@ def test_multiclass_confusion_matrix_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         multiclass_confusion_matrix(
@@ -728,6 +780,7 @@ def test_multiclass_confusion_matrix_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_confusion_matrix(
@@ -737,6 +790,7 @@ def test_multiclass_confusion_matrix_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_confusion_matrix(
@@ -746,6 +800,7 @@ def test_multiclass_confusion_matrix_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_confusion_matrix_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         multiclass_confusion_matrix(
@@ -755,11 +810,20 @@ def test_multiclass_confusion_matrix_nan_raise_y_pred() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multiclass_confusion_matrix_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multiclass_confusion_matrix(
+            y_true=np.array([0, 1, 1, 2, 2, 2]), y_pred=np.array([0, 1, 1, 2, 2, 2])
+        )
+
+
 #################################################
 #     Tests for multilabel_confusion_matrix     #
 #################################################
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_correct() -> None:
     assert objects_are_equal(
         multilabel_confusion_matrix(
@@ -773,6 +837,7 @@ def test_multilabel_confusion_matrix_correct() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_1_class_1d() -> None:
     assert objects_are_equal(
         multilabel_confusion_matrix(
@@ -786,6 +851,7 @@ def test_multilabel_confusion_matrix_1_class_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_1_class_2d() -> None:
     assert objects_are_equal(
         multilabel_confusion_matrix(
@@ -799,6 +865,7 @@ def test_multilabel_confusion_matrix_1_class_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_incorrect() -> None:
     assert objects_are_equal(
         multilabel_confusion_matrix(
@@ -812,6 +879,7 @@ def test_multilabel_confusion_matrix_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_empty_1d() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(y_true=np.array([]), y_pred=np.array([])),
@@ -822,6 +890,7 @@ def test_multilabel_confusion_matrix_empty_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_empty_2d() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(y_true=np.ones((0, 3)), y_pred=np.ones((0, 3))),
@@ -832,6 +901,7 @@ def test_multilabel_confusion_matrix_empty_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_correct_prefix_suffix() -> None:
     assert objects_are_equal(
         multilabel_confusion_matrix(
@@ -849,6 +919,7 @@ def test_multilabel_confusion_matrix_correct_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_omit() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -863,6 +934,7 @@ def test_multilabel_confusion_matrix_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_omit_y_true() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -877,6 +949,7 @@ def test_multilabel_confusion_matrix_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_omit_y_pred() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -891,6 +964,7 @@ def test_multilabel_confusion_matrix_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_propagate() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -904,6 +978,7 @@ def test_multilabel_confusion_matrix_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -917,6 +992,7 @@ def test_multilabel_confusion_matrix_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         multilabel_confusion_matrix(
@@ -930,6 +1006,7 @@ def test_multilabel_confusion_matrix_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_confusion_matrix(
@@ -939,6 +1016,7 @@ def test_multilabel_confusion_matrix_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_confusion_matrix(
@@ -948,10 +1026,20 @@ def test_multilabel_confusion_matrix_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_confusion_matrix_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         multilabel_confusion_matrix(
             y_true=np.array([[1, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 1], [1, 0, 1]]),
             y_pred=np.array([[1, 0, float("nan")], [0, 1, 0], [0, 1, 0], [1, 0, 1], [1, 0, 1]]),
             nan_policy="raise",
+        )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multilabel_confusion_matrix_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multilabel_confusion_matrix(
+            y_true=np.array([[1, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 1], [1, 0, 1]]),
+            y_pred=np.array([[1, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 1], [1, 0, 1]]),
         )
