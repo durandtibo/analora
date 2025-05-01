@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_equal
@@ -9,12 +11,14 @@ from analora.metric import (
     multiclass_top_k_accuracy,
     top_k_accuracy,
 )
+from analora.testing import sklearn_available
 
 ####################################
 #     Tests for top_k_accuracy     #
 ####################################
 
 
+@sklearn_available
 def test_top_k_accuracy_empty() -> None:
     assert objects_are_equal(
         top_k_accuracy(y_true=np.array([]), y_score=np.array([]), k=[1]),
@@ -23,6 +27,7 @@ def test_top_k_accuracy_empty() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_correct() -> None:
     assert objects_are_equal(
         top_k_accuracy(y_true=np.array([1, 0, 0, 1, 1]), y_score=np.array([2, -1, 0, 3, 1]), k=[1]),
@@ -34,6 +39,7 @@ def test_top_k_accuracy_binary_correct() -> None:
     r"ignore:'k' \(2\) greater than or equal to 'n_classes' \(2\) will result in a perfect score "
     r"and is therefore meaningless."
 )
+@sklearn_available
 def test_top_k_accuracy_binary_k() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -43,6 +49,7 @@ def test_top_k_accuracy_binary_k() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_incorrect() -> None:
     assert objects_are_equal(
         top_k_accuracy(y_true=np.array([1, 0, 0, 1]), y_score=np.array([0, 1, 1, 0]), k=[1]),
@@ -50,6 +57,7 @@ def test_top_k_accuracy_binary_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_prefix_suffix() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -63,6 +71,7 @@ def test_top_k_accuracy_binary_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -73,6 +82,7 @@ def test_top_k_accuracy_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass_k() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -84,6 +94,7 @@ def test_top_k_accuracy_multiclass_k() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass_prefix_suffix() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -101,6 +112,7 @@ def test_top_k_accuracy_multiclass_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_nan_omit() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -113,6 +125,7 @@ def test_top_k_accuracy_binary_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_nan_propagate() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -124,6 +137,7 @@ def test_top_k_accuracy_binary_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_binary_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_top_k_accuracy(
@@ -133,6 +147,7 @@ def test_top_k_accuracy_binary_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass_nan_omit() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -152,6 +167,7 @@ def test_top_k_accuracy_multiclass_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass_nan_propagate() -> None:
     assert objects_are_equal(
         top_k_accuracy(
@@ -165,6 +181,7 @@ def test_top_k_accuracy_multiclass_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_top_k_accuracy_multiclass_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         top_k_accuracy(
@@ -181,6 +198,7 @@ def test_top_k_accuracy_multiclass_nan_raise() -> None:
 ###########################################
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_correct() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -190,6 +208,7 @@ def test_binary_top_k_accuracy_correct() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_incorrect() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(y_true=np.array([1, 0, 0, 1]), y_score=np.array([0, 1, 1, 0]), k=[1]),
@@ -201,6 +220,7 @@ def test_binary_top_k_accuracy_incorrect() -> None:
     r"ignore:'k' \(2\) greater than or equal to 'n_classes' \(2\) will result in a perfect score "
     r"and is therefore meaningless."
 )
+@sklearn_available
 def test_binary_top_k_accuracy_k() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -210,6 +230,7 @@ def test_binary_top_k_accuracy_k() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_prefix_suffix() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -223,6 +244,7 @@ def test_binary_top_k_accuracy_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_omit() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -235,6 +257,7 @@ def test_binary_top_k_accuracy_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_omit_y_true() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -247,6 +270,7 @@ def test_binary_top_k_accuracy_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_omit_y_score() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -259,6 +283,7 @@ def test_binary_top_k_accuracy_nan_omit_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_propagate() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -271,6 +296,7 @@ def test_binary_top_k_accuracy_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -283,6 +309,7 @@ def test_binary_top_k_accuracy_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_propagate_y_score() -> None:
     assert objects_are_equal(
         binary_top_k_accuracy(
@@ -295,6 +322,7 @@ def test_binary_top_k_accuracy_nan_propagate_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_top_k_accuracy(
@@ -305,6 +333,7 @@ def test_binary_top_k_accuracy_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_top_k_accuracy(
@@ -315,6 +344,7 @@ def test_binary_top_k_accuracy_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_binary_top_k_accuracy_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         binary_top_k_accuracy(
@@ -325,11 +355,20 @@ def test_binary_top_k_accuracy_nan_raise_y_score() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_binary_top_k_accuracy_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        binary_top_k_accuracy(
+            y_true=np.array([1, 0, 0, 1, 1]), y_score=np.array([2, -1, 0, 3, 1]), k=[1]
+        )
+
+
 ###############################################
 #     Tests for multiclass_top_k_accuracy     #
 ###############################################
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -340,6 +379,7 @@ def test_multiclass_top_k_accuracy() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_k() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -351,6 +391,7 @@ def test_multiclass_top_k_accuracy_k() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_prefix_suffix() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -368,6 +409,7 @@ def test_multiclass_top_k_accuracy_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_omit() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -387,6 +429,7 @@ def test_multiclass_top_k_accuracy_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_omit_y_true() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -398,6 +441,7 @@ def test_multiclass_top_k_accuracy_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_omit_y_score() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -411,6 +455,7 @@ def test_multiclass_top_k_accuracy_nan_omit_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_propagate() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -424,6 +469,7 @@ def test_multiclass_top_k_accuracy_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -435,6 +481,7 @@ def test_multiclass_top_k_accuracy_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_propagate_y_score() -> None:
     assert objects_are_equal(
         multiclass_top_k_accuracy(
@@ -448,6 +495,7 @@ def test_multiclass_top_k_accuracy_nan_propagate_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_top_k_accuracy(
@@ -459,6 +507,7 @@ def test_multiclass_top_k_accuracy_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_top_k_accuracy(
@@ -468,6 +517,7 @@ def test_multiclass_top_k_accuracy_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_top_k_accuracy_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         multiclass_top_k_accuracy(
@@ -476,4 +526,13 @@ def test_multiclass_top_k_accuracy_nan_raise_y_score() -> None:
                 [[float("nan"), 0.2, 0.2], [0.3, 0.4, 0.2], [0.2, 0.4, 0.3], [0.7, 0.2, 0.1]]
             ),
             nan_policy="raise",
+        )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multiclass_top_k_accuracy_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multiclass_top_k_accuracy(
+            y_true=np.array([0, 1, 2, 2]),
+            y_score=np.array([[0.5, 0.2, 0.2], [0.3, 0.4, 0.2], [0.2, 0.4, 0.3], [0.7, 0.2, 0.1]]),
         )
