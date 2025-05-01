@@ -7,9 +7,11 @@ __all__ = ["root_mean_squared_error"]
 
 from typing import TYPE_CHECKING
 
-from sklearn import metrics
-
 from analora.metric.utils import contains_nan, preprocess_pred
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 if TYPE_CHECKING:
     import numpy as np
@@ -49,10 +51,8 @@ def root_mean_squared_error(
     {'count': 5, 'root_mean_squared_error': 0.0}
 
     ```
-
-    Note:
-        Require ``sklearn>=1.4.0``
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )
