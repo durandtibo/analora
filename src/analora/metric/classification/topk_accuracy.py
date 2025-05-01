@@ -7,13 +7,15 @@ __all__ = ["binary_top_k_accuracy", "multiclass_top_k_accuracy", "top_k_accuracy
 
 from typing import TYPE_CHECKING
 
-from sklearn import metrics
-
 from analora.metric.utils import (
     contains_nan,
     preprocess_score_binary,
     preprocess_score_multiclass,
 )
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -210,6 +212,7 @@ def _top_k_accuracy(
     Returns:
         The computed metrics.
     """
+    check_sklearn()
     y_true_nan = contains_nan(arr=y_true, nan_policy=nan_policy, name="'y_true'")
     y_score_nan = contains_nan(arr=y_score, nan_policy=nan_policy, name="'y_score'")
 
