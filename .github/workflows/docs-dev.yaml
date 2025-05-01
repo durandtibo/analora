@@ -29,7 +29,7 @@ jobs:
 
       - name: Install packages
         run: |
-          inv install --all-deps
+          inv install --all-deps --docs
 
       - name: Show python config
         run: |
