@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
@@ -11,12 +13,14 @@ from analora.metric import (
     precision,
 )
 from analora.metric.classification.precision import find_label_type
+from analora.testing import sklearn_available
 
 ###############################
 #     Tests for precision     #
 ###############################
 
 
+@sklearn_available
 def test_precision_auto_binary() -> None:
     assert objects_are_equal(
         precision(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1])),
@@ -24,6 +28,7 @@ def test_precision_auto_binary() -> None:
     )
 
 
+@sklearn_available
 def test_precision_binary() -> None:
     assert objects_are_equal(
         precision(
@@ -33,6 +38,7 @@ def test_precision_binary() -> None:
     )
 
 
+@sklearn_available
 def test_precision_binary_prefix_suffix() -> None:
     assert objects_are_equal(
         precision(
@@ -46,6 +52,7 @@ def test_precision_binary_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_precision_binary_nan_omit() -> None:
     assert objects_are_equal(
         precision(
@@ -58,6 +65,7 @@ def test_precision_binary_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_precision_binary_nan_propagate() -> None:
     assert objects_are_equal(
         precision(
@@ -71,6 +79,7 @@ def test_precision_binary_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_precision_binary_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         precision(
@@ -81,6 +90,7 @@ def test_precision_binary_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_precision_auto_multiclass() -> None:
     assert objects_are_equal(
         precision(
@@ -97,6 +107,7 @@ def test_precision_auto_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multiclass() -> None:
     assert objects_are_equal(
         precision(
@@ -114,6 +125,7 @@ def test_precision_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multiclass_prefix_suffix() -> None:
     assert objects_are_equal(
         precision(
@@ -133,6 +145,7 @@ def test_precision_multiclass_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multiclass_nan_omit() -> None:
     assert objects_are_equal(
         precision(
@@ -151,6 +164,7 @@ def test_precision_multiclass_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multiclass_nan_propagate() -> None:
     assert objects_are_equal(
         precision(
@@ -170,6 +184,7 @@ def test_precision_multiclass_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multiclass_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         precision(
@@ -180,6 +195,7 @@ def test_precision_multiclass_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_precision_auto_multilabel() -> None:
     assert objects_are_equal(
         precision(
@@ -196,6 +212,7 @@ def test_precision_auto_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multilabel() -> None:
     assert objects_are_equal(
         precision(
@@ -213,6 +230,7 @@ def test_precision_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multilabel_prefix_suffix() -> None:
     assert objects_are_equal(
         precision(
@@ -232,6 +250,7 @@ def test_precision_multilabel_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multilabel_nan_omit() -> None:
     assert objects_are_equal(
         precision(
@@ -254,6 +273,7 @@ def test_precision_multilabel_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multilabel_nan_propagate() -> None:
     assert objects_are_equal(
         precision(
@@ -277,6 +297,7 @@ def test_precision_multilabel_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_precision_multilabel_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         precision(
@@ -291,6 +312,7 @@ def test_precision_multilabel_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_precision_label_type_incorrect() -> None:
     with pytest.raises(ValueError, match="Incorrect 'label_type': incorrect"):
         precision(
@@ -305,6 +327,7 @@ def test_precision_label_type_incorrect() -> None:
 ######################################
 
 
+@sklearn_available
 def test_binary_precision_correct_1d() -> None:
     assert objects_are_equal(
         binary_precision(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1])),
@@ -312,6 +335,7 @@ def test_binary_precision_correct_1d() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_correct_2d() -> None:
     assert objects_are_equal(
         binary_precision(
@@ -322,6 +346,7 @@ def test_binary_precision_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_incorrect() -> None:
     assert objects_are_equal(
         binary_precision(y_true=np.array([1, 0, 0, 1]), y_pred=np.array([1, 0, 1, 0])),
@@ -329,6 +354,7 @@ def test_binary_precision_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_empty() -> None:
     assert objects_are_equal(
         binary_precision(y_true=np.array([]), y_pred=np.array([])),
@@ -337,6 +363,7 @@ def test_binary_precision_empty() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_prefix_suffix() -> None:
     assert objects_are_equal(
         binary_precision(
@@ -349,6 +376,7 @@ def test_binary_precision_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_incorrect_shape() -> None:
     with pytest.raises(RuntimeError, match="'y_true' and 'y_pred' have different shapes:"):
         binary_precision(
@@ -357,6 +385,7 @@ def test_binary_precision_incorrect_shape() -> None:
         )
 
 
+@sklearn_available
 def test_binary_precision_nan_omit() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -368,6 +397,7 @@ def test_binary_precision_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_omit_y_true() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -379,6 +409,7 @@ def test_binary_precision_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_omit_y_pred() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -390,6 +421,7 @@ def test_binary_precision_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_nan_propagate() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -401,6 +433,7 @@ def test_binary_precision_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -412,6 +445,7 @@ def test_binary_precision_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         binary_precision(
@@ -423,6 +457,7 @@ def test_binary_precision_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_binary_precision_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_precision(
@@ -432,6 +467,7 @@ def test_binary_precision_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_binary_precision_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_precision(
@@ -441,6 +477,7 @@ def test_binary_precision_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_binary_precision_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         binary_precision(
@@ -450,11 +487,18 @@ def test_binary_precision_nan_raise_y_pred() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_binary_precision_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        binary_precision(y_true=np.array([1, 0, 0, 1, 1]), y_pred=np.array([1, 0, 0, 1, 1]))
+
+
 ##########################################
 #     Tests for multiclass_precision     #
 ##########################################
 
 
+@sklearn_available
 def test_multiclass_precision_correct_1d() -> None:
     assert objects_are_equal(
         multiclass_precision(
@@ -471,6 +515,7 @@ def test_multiclass_precision_correct_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_correct_2d() -> None:
     assert objects_are_equal(
         multiclass_precision(
@@ -487,6 +532,7 @@ def test_multiclass_precision_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_incorrect() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -503,6 +549,7 @@ def test_multiclass_precision_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_empty() -> None:
     assert objects_are_allclose(
         multiclass_precision(y_true=np.array([]), y_pred=np.array([])),
@@ -517,6 +564,7 @@ def test_multiclass_precision_empty() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_prefix_suffix() -> None:
     assert objects_are_equal(
         multiclass_precision(
@@ -535,6 +583,7 @@ def test_multiclass_precision_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_omit() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -552,6 +601,7 @@ def test_multiclass_precision_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_omit_y_true() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -569,6 +619,7 @@ def test_multiclass_precision_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_omit_y_pred() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -586,6 +637,7 @@ def test_multiclass_precision_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_propagate() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -603,6 +655,7 @@ def test_multiclass_precision_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -620,6 +673,7 @@ def test_multiclass_precision_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         multiclass_precision(
@@ -637,6 +691,7 @@ def test_multiclass_precision_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_precision(
@@ -646,6 +701,7 @@ def test_multiclass_precision_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_precision(
@@ -655,6 +711,7 @@ def test_multiclass_precision_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_precision_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         multiclass_precision(
@@ -664,11 +721,21 @@ def test_multiclass_precision_nan_raise_y_pred() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multiclass_precision_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multiclass_precision(
+            y_true=np.array([0, 0, 1, 1, 2, 2]),
+            y_pred=np.array([0, 0, 1, 1, 2, 2]),
+        )
+
+
 ##########################################
 #     Tests for multilabel_precision     #
 ##########################################
 
 
+@sklearn_available
 def test_multilabel_precision_1_class_1d() -> None:
     assert objects_are_equal(
         multilabel_precision(
@@ -685,6 +752,7 @@ def test_multilabel_precision_1_class_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_1_class_2d() -> None:
     assert objects_are_equal(
         multilabel_precision(
@@ -701,6 +769,7 @@ def test_multilabel_precision_1_class_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_3_classes() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -717,6 +786,7 @@ def test_multilabel_precision_3_classes() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_empty_1d() -> None:
     assert objects_are_allclose(
         multilabel_precision(y_true=np.array([]), y_pred=np.array([])),
@@ -731,6 +801,7 @@ def test_multilabel_precision_empty_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_empty_2d() -> None:
     assert objects_are_allclose(
         multilabel_precision(y_true=np.ones((0, 3)), y_pred=np.ones((0, 3))),
@@ -745,6 +816,7 @@ def test_multilabel_precision_empty_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_prefix_suffix() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -763,6 +835,7 @@ def test_multilabel_precision_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_omit() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -780,6 +853,7 @@ def test_multilabel_precision_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_omit_y_true() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -797,6 +871,7 @@ def test_multilabel_precision_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_omit_y_pred() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -814,6 +889,7 @@ def test_multilabel_precision_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_propagate() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -831,6 +907,7 @@ def test_multilabel_precision_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_propagate_y_true() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -848,6 +925,7 @@ def test_multilabel_precision_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_propagate_y_pred() -> None:
     assert objects_are_allclose(
         multilabel_precision(
@@ -865,6 +943,7 @@ def test_multilabel_precision_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_precision(
@@ -874,6 +953,7 @@ def test_multilabel_precision_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_precision(
@@ -883,6 +963,7 @@ def test_multilabel_precision_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_precision_nan_raise_y_pred() -> None:
     with pytest.raises(ValueError, match="'y_pred' contains at least one NaN value"):
         multilabel_precision(
@@ -892,11 +973,21 @@ def test_multilabel_precision_nan_raise_y_pred() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multilabel_precision_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multilabel_precision(
+            y_true=np.array([1, 0, 0, 1, 1]),
+            y_pred=np.array([1, 0, 0, 1, 1]),
+        )
+
+
 #####################################
 #     Tests for find_label_type     #
 #####################################
 
 
+@sklearn_available
 def test_find_label_type_binary() -> None:
     assert (
         find_label_type(
@@ -907,6 +998,7 @@ def test_find_label_type_binary() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_binary_nans() -> None:
     assert (
         find_label_type(
@@ -917,6 +1009,7 @@ def test_find_label_type_binary_nans() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_binary_y_true_nan() -> None:
     assert (
         find_label_type(
@@ -927,6 +1020,7 @@ def test_find_label_type_binary_y_true_nan() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_binary_y_pred_nan() -> None:
     assert (
         find_label_type(
@@ -937,6 +1031,7 @@ def test_find_label_type_binary_y_pred_nan() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multiclass() -> None:
     assert (
         find_label_type(y_true=np.array([0, 0, 1, 1, 2, 2]), y_pred=np.array([0, 0, 1, 1, 2, 2]))
@@ -944,6 +1039,7 @@ def test_find_label_type_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multiclass_nans() -> None:
     assert (
         find_label_type(
@@ -954,6 +1050,7 @@ def test_find_label_type_multiclass_nans() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multiclass_y_true_nan() -> None:
     assert (
         find_label_type(
@@ -964,6 +1061,7 @@ def test_find_label_type_multiclass_y_true_nan() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multiclass_y_pred_nan() -> None:
     assert (
         find_label_type(
@@ -974,6 +1072,7 @@ def test_find_label_type_multiclass_y_pred_nan() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multilabel() -> None:
     assert (
         find_label_type(
@@ -984,6 +1083,7 @@ def test_find_label_type_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multilabel_nans() -> None:
     assert (
         find_label_type(
@@ -994,6 +1094,7 @@ def test_find_label_type_multilabel_nans() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multilabel_y_true_nan() -> None:
     assert (
         find_label_type(
@@ -1004,6 +1105,7 @@ def test_find_label_type_multilabel_y_true_nan() -> None:
     )
 
 
+@sklearn_available
 def test_find_label_type_multilabel_y_pred_nan() -> None:
     assert (
         find_label_type(

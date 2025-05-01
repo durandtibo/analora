@@ -13,7 +13,6 @@ __all__ = [
 import math
 
 import numpy as np
-from sklearn import metrics
 
 from analora.metric.utils import (
     check_label_type,
@@ -21,6 +20,10 @@ from analora.metric.utils import (
     preprocess_pred,
     preprocess_pred_multilabel,
 )
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 
 def precision(
@@ -145,6 +148,7 @@ def binary_precision(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )
@@ -198,6 +202,7 @@ def multiclass_precision(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )
@@ -271,6 +276,7 @@ def multilabel_precision(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred_multilabel(y_true, y_pred, drop_nan=nan_policy == "omit")
     y_true_nan = contains_nan(arr=y_true, nan_policy=nan_policy, name="'y_true'")
     y_pred_nan = contains_nan(arr=y_pred, nan_policy=nan_policy, name="'y_pred'")
