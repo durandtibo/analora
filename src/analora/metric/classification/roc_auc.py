@@ -13,7 +13,6 @@ __all__ = [
 from typing import Any
 
 import numpy as np
-from sklearn import metrics
 
 from analora.metric.classification.ap import find_label_type
 from analora.metric.utils import (
@@ -23,6 +22,10 @@ from analora.metric.utils import (
     preprocess_score_multiclass,
     preprocess_score_multilabel,
 )
+from analora.utils.imports import check_sklearn, is_sklearn_available
+
+if is_sklearn_available():  # pragma: no cover
+    from sklearn import metrics
 
 
 def roc_auc(
@@ -168,6 +171,7 @@ def binary_roc_auc(
     Returns:
         The computed metrics.
     """
+    check_sklearn()
     y_true, y_score = preprocess_score_binary(
         y_true=y_true, y_score=y_score, drop_nan=nan_policy == "omit"
     )
@@ -287,6 +291,7 @@ def _multi_roc_auc(
     Returns:
         The computed metrics.
     """
+    check_sklearn()
     y_true_nan = contains_nan(arr=y_true, nan_policy=nan_policy, name="'y_true'")
     y_score_nan = contains_nan(arr=y_score, nan_policy=nan_policy, name="'y_score'")
 
