@@ -154,6 +154,7 @@ def binary_confusion_matrix(
 
     ```
     """
+    check_sklearn()
     y_true, y_pred = preprocess_pred(
         y_true=y_true.ravel(), y_pred=y_pred.ravel(), drop_nan=nan_policy == "omit"
     )
@@ -164,7 +165,6 @@ def binary_confusion_matrix(
     if y_true_nan or y_pred_nan:
         confmat = np.array([[np.nan, np.nan], [np.nan, np.nan]])
     elif count > 0:
-        check_sklearn()
         confmat = metrics.confusion_matrix(y_true=y_true, y_pred=y_pred)
     else:
         confmat = np.zeros((2, 2), dtype=np.int64)
