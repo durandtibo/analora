@@ -50,7 +50,7 @@ def doctest_src(c: Context) -> None:
 @task
 def install(c: Context, all_deps: bool = False) -> None:
     r"""Install packages."""
-    cmd = ["uv pip install -r pyproject.toml --group dev"]
+    cmd = ["uv pip install -r pyproject.toml --group dev --group docs"]
     if all_deps:
         cmd.append("--all-extras")
     c.run(" ".join(cmd), pty=True)
@@ -88,3 +88,11 @@ def show_python_config(c: Context) -> None:
     c.run("uv python list --only-installed", pty=True)
     c.run("uv python find", pty=True)
     c.run("which python", pty=True)
+
+
+@task
+def publish_doc_dev(c: Context) -> None:
+    r"""Publish development docs."""
+    # delete previous version if it exists
+    c.run("mike delete --config-file docs/mkdocs.yml main", pty=True, warn=True)
+    c.run("mike deploy --config-file docs/mkdocs.yml --push --update-aliases main dev", pty=True)
