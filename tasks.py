@@ -48,9 +48,11 @@ def doctest_src(c: Context) -> None:
 
 
 @task
-def install(c: Context, all_deps: bool = False) -> None:
+def install(c: Context, all_deps: bool = False, docs: bool = False) -> None:
     r"""Install packages."""
-    cmd = ["uv pip install -r pyproject.toml --group dev --group docs"]
+    cmd = ["uv pip install -r pyproject.toml --group dev"]
+    if docs:
+        cmd.append("--group docs")
     if all_deps:
         cmd.append("--all-extras")
     c.run(" ".join(cmd), pty=True)
