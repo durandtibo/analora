@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
+import pytest
 from coola import objects_are_allclose
 
 from analora.metric import kl_div
@@ -47,3 +50,9 @@ def test_kl_div_prefix_suffix() -> None:
         ),
         {"prefix_size_suffix": 4, "prefix_kl_pq_suffix": 0.0, "prefix_kl_qp_suffix": 0.0},
     )
+
+
+@patch("analora.utils.imports.is_scipy_available", lambda: False)
+def test_kl_div_no_scipy() -> None:
+    with pytest.raises(RuntimeError, match="'scipy' package is required but not installed."):
+        kl_div(p=np.array([0.1, 0.6, 0.1, 0.2]), q=np.array([0.1, 0.6, 0.1, 0.2]))

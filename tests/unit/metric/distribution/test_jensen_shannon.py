@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
+import pytest
 from coola import objects_are_allclose
 
 from analora.metric import jensen_shannon_divergence
@@ -49,3 +52,11 @@ def test_jensen_shannon_divergence_prefix_suffix() -> None:
         ),
         {"prefix_size_suffix": 4, "prefix_jensen_shannon_divergence_suffix": 0.0},
     )
+
+
+@patch("analora.utils.imports.is_scipy_available", lambda: False)
+def test_jensen_shannon_divergence_no_scipy() -> None:
+    with pytest.raises(RuntimeError, match="'scipy' package is required but not installed."):
+        jensen_shannon_divergence(
+            p=np.array([0.1, 0.6, 0.1, 0.2]), q=np.array([0.1, 0.6, 0.1, 0.2])
+        )
