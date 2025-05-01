@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose
@@ -160,3 +162,9 @@ def test_energy_distance_nan_raise_v_values() -> None:
             v_values=np.array([1, 2, 3, 4, float("nan")]),
             nan_policy="raise",
         )
+
+
+@patch("analora.utils.imports.is_scipy_available", lambda: False)
+def test_energy_distance_no_scipy() -> None:
+    with pytest.raises(RuntimeError, match="'scipy' package is required but not installed."):
+        energy_distance(u_values=np.array([1, 2, 3, 4, 5]), v_values=np.array([1, 2, 3, 4, 5]))

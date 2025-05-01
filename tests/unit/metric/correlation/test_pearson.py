@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose
@@ -222,3 +224,9 @@ def test_pearsonr_nan_raise_y() -> None:
             y=np.array([1, 2, 3, 4, float("nan")]),
             nan_policy="raise",
         )
+
+
+@patch("analora.utils.imports.is_scipy_available", lambda: False)
+def test_pearsonr_no_scipy() -> None:
+    with pytest.raises(RuntimeError, match="'scipy' package is required but not installed."):
+        pearsonr(x=np.array([1, 2, 3, 4, 5]), y=np.array([1, 2, 3, 4, 5]))
