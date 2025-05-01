@@ -31,7 +31,6 @@ dependencies = [
     "iden >=0.1,<1.0",
     "matplotlib >=3.8,<4.0",
     "numpy >=2.0,<3.0",
-    "scikit-learn >=1.5,<2.0",
 ]
 
 [project.optional-dependencies]
@@ -44,6 +43,7 @@ hydra = [
 ]
 markdown = ["markdown >=3.4,<4.0"]
 polars = ["polars >=1.0,<2.0"]
+scikit-learn = ["scikit-learn >=1.5,<2.0"]
 scipy = ["scipy >=1.10,<2.0"]
 tqdm = ["tqdm >=4.65,<5.0"]
 
