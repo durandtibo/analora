@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
@@ -10,12 +12,14 @@ from analora.metric import (
     multilabel_roc_auc,
     roc_auc,
 )
+from analora.testing import sklearn_available
 
 #############################
 #     Tests for roc_auc     #
 #############################
 
 
+@sklearn_available
 def test_roc_auc_auto_binary() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -27,6 +31,7 @@ def test_roc_auc_auto_binary() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_binary() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -38,6 +43,7 @@ def test_roc_auc_binary() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_binary_prefix_suffix() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -51,6 +57,7 @@ def test_roc_auc_binary_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_binary_nan_omit() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -63,6 +70,7 @@ def test_roc_auc_binary_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_binary_nan_propagate() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -75,6 +83,7 @@ def test_roc_auc_binary_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_binary_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         roc_auc(
@@ -85,6 +94,7 @@ def test_roc_auc_binary_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_roc_auc_auto_multiclass() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -110,6 +120,7 @@ def test_roc_auc_auto_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multiclass() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -136,6 +147,7 @@ def test_roc_auc_multiclass() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multiclass_prefix_suffix() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -164,6 +176,7 @@ def test_roc_auc_multiclass_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_roc_multiclass_auc_nan_omit() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -192,6 +205,7 @@ def test_roc_multiclass_auc_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multiclass_nan_propagate() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -220,6 +234,7 @@ def test_roc_auc_multiclass_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_roc_multiclass_auc_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         roc_auc(
@@ -240,6 +255,7 @@ def test_roc_multiclass_auc_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_roc_auc_auto_multilabel() -> None:
     assert objects_are_allclose(
         roc_auc(
@@ -256,6 +272,7 @@ def test_roc_auc_auto_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multilabel() -> None:
     assert objects_are_allclose(
         roc_auc(
@@ -273,6 +290,7 @@ def test_roc_auc_multilabel() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multilabel_prefix_suffix() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -292,6 +310,7 @@ def test_roc_auc_multilabel_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multilabel_nan_omit() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -312,6 +331,7 @@ def test_roc_auc_multilabel_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_roc_auc_multilabel_nan_propagate() -> None:
     assert objects_are_equal(
         roc_auc(
@@ -332,6 +352,7 @@ def test_roc_auc_multilabel_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_roc_multilabel_auc_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         roc_auc(
@@ -344,6 +365,7 @@ def test_roc_multilabel_auc_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_roc_auc_label_type_incorrect() -> None:
     with pytest.raises(ValueError, match="Incorrect 'label_type': incorrect"):
         roc_auc(
@@ -367,6 +389,7 @@ def test_roc_auc_label_type_incorrect() -> None:
 ####################################
 
 
+@sklearn_available
 def test_binary_roc_auc_correct() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -377,6 +400,7 @@ def test_binary_roc_auc_correct() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_correct_2d() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -387,6 +411,7 @@ def test_binary_roc_auc_correct_2d() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_incorrect() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -397,6 +422,7 @@ def test_binary_roc_auc_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_empty() -> None:
     assert objects_are_equal(
         binary_roc_auc(y_true=np.array([]), y_score=np.array([])),
@@ -405,6 +431,7 @@ def test_binary_roc_auc_empty() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_prefix_suffix() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -417,6 +444,7 @@ def test_binary_roc_auc_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_incorrect_shape() -> None:
     with pytest.raises(RuntimeError, match="'y_true' and 'y_score' have different shapes:"):
         binary_roc_auc(
@@ -425,6 +453,7 @@ def test_binary_roc_auc_incorrect_shape() -> None:
         )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_omit() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -436,6 +465,7 @@ def test_binary_roc_auc_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_omit_y_true() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -447,6 +477,7 @@ def test_binary_roc_auc_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_omit_y_score() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -458,6 +489,7 @@ def test_binary_roc_auc_nan_omit_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_propagate() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -469,6 +501,7 @@ def test_binary_roc_auc_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -480,6 +513,7 @@ def test_binary_roc_auc_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_propagate_y_score() -> None:
     assert objects_are_equal(
         binary_roc_auc(
@@ -491,6 +525,7 @@ def test_binary_roc_auc_nan_propagate_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_roc_auc(
@@ -500,6 +535,7 @@ def test_binary_roc_auc_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         binary_roc_auc(
@@ -509,6 +545,7 @@ def test_binary_roc_auc_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_binary_roc_auc_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         binary_roc_auc(
@@ -518,11 +555,21 @@ def test_binary_roc_auc_nan_raise_y_score() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_binary_roc_auc_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        binary_roc_auc(
+            y_true=np.array([1, 0, 0, 1, 1]),
+            y_score=np.array([2, -1, 0, 3, 1]),
+        )
+
+
 ########################################
 #     Tests for multiclass_roc_auc     #
 ########################################
 
 
+@sklearn_available
 def test_multiclass_roc_auc_correct() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -548,6 +595,7 @@ def test_multiclass_roc_auc_correct() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_incorrect() -> None:
     assert objects_are_allclose(
         multiclass_roc_auc(
@@ -573,6 +621,7 @@ def test_multiclass_roc_auc_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_empty_1d() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(y_true=np.array([]), y_score=np.array([])),
@@ -587,6 +636,7 @@ def test_multiclass_roc_auc_empty_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_empty_2d() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(y_true=np.ones((0,)), y_score=np.ones((0, 3))),
@@ -601,6 +651,7 @@ def test_multiclass_roc_auc_empty_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_prefix_suffix() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -628,6 +679,7 @@ def test_multiclass_roc_auc_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_omit() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -655,6 +707,7 @@ def test_multiclass_roc_auc_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_omit_y_true() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -682,6 +735,7 @@ def test_multiclass_roc_auc_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_omit_y_score() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -709,6 +763,7 @@ def test_multiclass_roc_auc_nan_omit_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_propagate() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -736,6 +791,7 @@ def test_multiclass_roc_auc_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -763,6 +819,7 @@ def test_multiclass_roc_auc_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_propagate_y_score() -> None:
     assert objects_are_equal(
         multiclass_roc_auc(
@@ -790,6 +847,7 @@ def test_multiclass_roc_auc_nan_propagate_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_roc_auc(
@@ -809,6 +867,7 @@ def test_multiclass_roc_auc_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multiclass_roc_auc(
@@ -828,6 +887,7 @@ def test_multiclass_roc_auc_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multiclass_roc_auc_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         multiclass_roc_auc(
@@ -847,11 +907,30 @@ def test_multiclass_roc_auc_nan_raise_y_score() -> None:
         )
 
 
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multiclass_roc_auc_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multiclass_roc_auc(
+            y_true=np.array([0, 0, 1, 1, 2, 2]),
+            y_score=np.array(
+                [
+                    [0.7, 0.2, 0.1],
+                    [0.4, 0.3, 0.3],
+                    [0.1, 0.8, 0.1],
+                    [0.2, 0.5, 0.3],
+                    [0.3, 0.2, 0.5],
+                    [0.1, 0.2, 0.7],
+                ]
+            ),
+        )
+
+
 ########################################
 #     Tests for multilabel_roc_auc     #
 ########################################
 
 
+@sklearn_available
 def test_multilabel_roc_auc_1_class_1d() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -868,6 +947,7 @@ def test_multilabel_roc_auc_1_class_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_1_class_2d() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -884,6 +964,7 @@ def test_multilabel_roc_auc_1_class_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_3_classes() -> None:
     assert objects_are_allclose(
         multilabel_roc_auc(
@@ -900,6 +981,7 @@ def test_multilabel_roc_auc_3_classes() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_empty_1d() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(y_true=np.array([]), y_score=np.array([])),
@@ -914,6 +996,7 @@ def test_multilabel_roc_auc_empty_1d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_empty_2d() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(y_true=np.ones((0, 3)), y_score=np.ones((0, 3))),
@@ -928,6 +1011,7 @@ def test_multilabel_roc_auc_empty_2d() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_prefix_suffix() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -946,6 +1030,7 @@ def test_multilabel_roc_auc_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_omit() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -965,6 +1050,7 @@ def test_multilabel_roc_auc_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_omit_y_true() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -982,6 +1068,7 @@ def test_multilabel_roc_auc_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_omit_y_score() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -1001,6 +1088,7 @@ def test_multilabel_roc_auc_nan_omit_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_propagate() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -1020,6 +1108,7 @@ def test_multilabel_roc_auc_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_propagate_y_true() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -1037,6 +1126,7 @@ def test_multilabel_roc_auc_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_propagate_y_score() -> None:
     assert objects_are_equal(
         multilabel_roc_auc(
@@ -1056,6 +1146,7 @@ def test_multilabel_roc_auc_nan_propagate_y_score() -> None:
     )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_raise() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_roc_auc(
@@ -1067,6 +1158,7 @@ def test_multilabel_roc_auc_nan_raise() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_raise_y_true() -> None:
     with pytest.raises(ValueError, match="'y_true' contains at least one NaN value"):
         multilabel_roc_auc(
@@ -1076,6 +1168,7 @@ def test_multilabel_roc_auc_nan_raise_y_true() -> None:
         )
 
 
+@sklearn_available
 def test_multilabel_roc_auc_nan_raise_y_score() -> None:
     with pytest.raises(ValueError, match="'y_score' contains at least one NaN value"):
         multilabel_roc_auc(
@@ -1084,4 +1177,13 @@ def test_multilabel_roc_auc_nan_raise_y_score() -> None:
                 [[float("nan"), -1, 1], [-1, 1, -2], [0, 2, -3], [3, -2, 4], [1, -3, 5]]
             ),
             nan_policy="raise",
+        )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_multilabel_roc_auc_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        multilabel_roc_auc(
+            y_true=np.array([1, 0, 0, 1, 1]),
+            y_score=np.array([2, -1, 0, 3, 1]),
         )
