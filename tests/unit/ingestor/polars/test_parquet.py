@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from unittest.mock import patch
 
 import pytest
 
@@ -107,3 +108,9 @@ def test_parquet_ingestor_ingest_with_kwargs(frame_path: Path) -> None:
             }
         ),
     )
+
+
+@patch("analora.utils.imports.is_polars_available", lambda: False)
+def test_parquet_ingestor_no_polars(tmp_path: Path) -> None:
+    with pytest.raises(RuntimeError, match="'polars' package is required but not installed."):
+        ParquetIngestor(tmp_path)
