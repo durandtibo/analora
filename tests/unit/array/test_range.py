@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 from coola import objects_are_equal
 
-from analora.utils.range import find_range
+from analora.array import find_range
 
 ################################
 #     Tests for find_range     #
