@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from analora.utils.array import filter_range, nonnan
+from analora.array import filter_range, nonnan
 
 ##################################
 #     Tests for filter_range     #
