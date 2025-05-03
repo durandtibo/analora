@@ -7,6 +7,7 @@ __all__ = [
     "Ingestor",
     "MappingIngestor",
     "PickleIngestor",
+    "TorchIngestor",
     "is_ingestor_config",
     "setup_ingestor",
 ]
@@ -14,4 +15,5 @@ __all__ = [
 from analora.ingestor.base import BaseIngestor, is_ingestor_config, setup_ingestor
 from analora.ingestor.mapping import MappingIngestor
 from analora.ingestor.pickle import PickleIngestor
+from analora.ingestor.torch import TorchIngestor
 from analora.ingestor.vanilla import Ingestor
