@@ -11,8 +11,9 @@ from unittest.mock import Mock
 from coola import objects_are_equal
 
 from analora.ingestor.base import BaseIngestor
-from analora.utils.format import str_kwargs
+from analora.utils.format import human_byte, str_kwargs
 from analora.utils.imports import check_polars, is_polars_available
+from analora.utils.timing import timeblock
 
 if is_polars_available():
     import polars as pl
@@ -64,6 +65,10 @@ class CsvIngestor(BaseIngestor[pl.DataFrame]):
 
     def ingest(self) -> pl.DataFrame:
         logger.info(f"Ingesting CSV data from {self._source}...")
-        frame = pl.read_csv(self._source, **self._kwargs)
-        logger.info(f"DataFrame ingested | schema={frame.collect_schema()}")
+        with timeblock("DataFrame ingestion time: {time}"):
+            frame = pl.read_csv(self._source, **self._kwargs)
+        logger.info(
+            f"DataFrame ingested | shape={frame.shape}  "
+            f"estimated size={human_byte(frame.estimated_size())}"
+        )
         return frame

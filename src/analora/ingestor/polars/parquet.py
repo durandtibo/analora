@@ -67,8 +67,8 @@ class ParquetIngestor(BaseIngestor[pl.DataFrame]):
         logger.info(f"Ingesting parquet data from {self._source}...")
         with timeblock("DataFrame ingestion time: {time}"):
             frame = pl.read_parquet(self._source, **self._kwargs)
-            logger.info(
-                f"DataFrame ingested | shape={frame.shape}  "
-                f"estimated size={human_byte(frame.estimated_size())}"
-            )
+        logger.info(
+            f"DataFrame ingested | shape={frame.shape}  "
+            f"estimated size={human_byte(frame.estimated_size())}"
+        )
         return frame
