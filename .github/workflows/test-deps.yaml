@@ -38,10 +38,59 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.1
+        uses: durandtibo/pip-install-package-action@v0.3.2
         with:
           package-name: 'coola'
           package-version: ${{ matrix.coola-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show python config
+        run: |
+          inv show-python-config
+
+      - name: Show installed packages
+        run: |
+          inv show-installed-packages
+
+      - name: Run unit tests
+        run: |
+          inv unit-test
+
+
+  iden:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.13', '3.12', '3.11', '3.10' ]
+        iden-version: [ 0.2.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          activate-environment: true
+
+      - name: Install invoke
+        run: |
+          make install-invoke
+
+      - name: Install packages
+        run: |
+          inv install --all-deps
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.2
+        with:
+          package-name: 'iden'
+          package-version: ${{ matrix.iden-version }}
           python-version: ${{ matrix.python-version }}
 
       - name: Show python config
@@ -87,7 +136,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.1
+        uses: durandtibo/pip-install-package-action@v0.3.2
         with:
           package-name: 'matplotlib'
           package-version: ${{ matrix.matplotlib-version }}
@@ -141,7 +190,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.1
+        uses: durandtibo/pip-install-package-action@v0.3.2
         with:
           package-name: 'numpy'
           package-version: ${{ matrix.numpy-version }}
@@ -196,7 +245,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.1
+        uses: durandtibo/pip-install-package-action@v0.3.2
         with:
           package-name: 'objectory'
           package-version: ${{ matrix.objectory-version }}
@@ -245,10 +294,59 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.1
+        uses: durandtibo/pip-install-package-action@v0.3.2
         with:
           package-name: 'scikit-learn'
           package-version: ${{ matrix.scikit-learn-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show python config
+        run: |
+          inv show-python-config
+
+      - name: Show installed packages
+        run: |
+          inv show-installed-packages
+
+      - name: Run unit tests
+        run: |
+          inv unit-test
+
+
+  scipy:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.13', '3.12', '3.11', '3.10' ]
+        scipy-version: [ 1.15.2, 1.14.1, 1.13.1, 1.12.0, 1.11.4, 1.10.1 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          activate-environment: true
+
+      - name: Install invoke
+        run: |
+          make install-invoke
+
+      - name: Install packages
+        run: |
+          inv install --all-deps
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.2
+        with:
+          package-name: 'scipy'
+          package-version: ${{ matrix.scipy-version }}
           python-version: ${{ matrix.python-version }}
 
       - name: Show python config
