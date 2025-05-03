@@ -12,7 +12,7 @@ from coola import objects_are_equal
 
 from analora.ingestor.base import BaseIngestor
 from analora.utils.format import str_kwargs
-from analora.utils.imports import is_polars_available
+from analora.utils.imports import check_polars, is_polars_available
 
 if is_polars_available():
     import polars as pl
@@ -48,6 +48,7 @@ class CsvIngestor(BaseIngestor[pl.DataFrame]):
     """
 
     def __init__(self, source: FileSource, **kwargs: Any) -> None:
+        check_polars()
         self._source = source
         self._kwargs = kwargs
 
