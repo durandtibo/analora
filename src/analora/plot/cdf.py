@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from analora.utils.array import nonnan
+from analora.array import nonnan
 
 if TYPE_CHECKING:
     from matplotlib.axes import Axes

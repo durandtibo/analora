@@ -1,4 +1,4 @@
-r"""Implement some utility functions for ``numpy.ndarray``s."""
+r"""Implement filtering utility functions for ``numpy.ndarray``s."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ def filter_range(array: np.ndarray, xmin: float, xmax: float) -> np.ndarray:
     ```pycon
 
     >>> import numpy as np
-    >>> from analora.utils.array import filter_range
+    >>> from analora.array import filter_range
     >>> out = filter_range(np.arange(10), xmin=-1, xmax=5)
     >>> out
     array([0, 1, 2, 3, 4, 5])
@@ -48,7 +48,7 @@ def nonnan(array: np.ndarray) -> np.ndarray:
     ```pycon
 
     >>> import numpy as np
-    >>> from analora.utils.array import nonnan
+    >>> from analora.array import nonnan
     >>> nonnan(np.asarray([1, 2, float("nan"), 5, 6]))
     array([1., 2., 5., 6.])
     >>> nonnan(np.asarray([[1, 2, float("nan")], [4, 5, 6]]))

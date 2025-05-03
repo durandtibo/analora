@@ -7,7 +7,7 @@ __all__ = ["auto_yscale_continuous", "auto_yscale_discrete"]
 
 import numpy as np
 
-from analora.utils.array import nonnan
+from analora.array import nonnan
 
 
 def auto_yscale_continuous(array: np.ndarray, nbins: int | None = None) -> str:

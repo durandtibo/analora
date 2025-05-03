@@ -13,13 +13,13 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
+from analora.array import nonnan
 from analora.plot.cdf import plot_cdf
 from analora.plot.utils import (
     auto_yscale_continuous,
     axvline_quantile,
     readable_xticklabels,
 )
-from analora.utils.array import nonnan
 from analora.utils.range import find_range
 
 if TYPE_CHECKING:
