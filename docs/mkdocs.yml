@@ -19,6 +19,7 @@ theme:
 nav:
   - Home: index.md
   - Reference:
+      - refs/array.md
       - refs/ingestor.md
       - refs/metric.md
       - refs/plot.md
