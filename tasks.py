@@ -94,7 +94,27 @@ def show_python_config(c: Context) -> None:
 
 @task
 def publish_doc_dev(c: Context) -> None:
-    r"""Publish development docs."""
+    r"""Publish development (e.g. unstable) docs."""
     # delete previous version if it exists
     c.run("mike delete --config-file docs/mkdocs.yml main", pty=True, warn=True)
     c.run("mike deploy --config-file docs/mkdocs.yml --push --update-aliases main dev", pty=True)
+
+
+@task
+def publish_doc_latest(c: Context) -> None:
+    r"""Publish latest (e.g. stable) docs."""
+    from feu.git import get_last_version_tag_name
+    from packaging.version import Version
+
+    try:
+        version = Version(get_last_version_tag_name())
+        tag = f"{version.major}.{version.minor}"
+    except RuntimeError:
+        tag = "0.0"
+
+    # delete previous version if it exists
+    c.run(f"mike delete --config-file docs/mkdocs.yml {tag}", pty=True, warn=True)
+    c.run(
+        f"mike deploy --config-file docs/mkdocs.yml --push --update-aliases {tag} latest", pty=True
+    )
+    c.run("mike set-default --config-file docs/mkdocs.yml --push --allow-empty latest", pty=True)
