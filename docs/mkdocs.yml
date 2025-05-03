@@ -19,7 +19,9 @@ theme:
 nav:
   - Home: index.md
   - Reference:
+      - refs/ingestor.md
       - refs/metric.md
+      - refs/plot.md
   - GitHub: https://github.com/durandtibo/analora
 
 repo_url: https://github.com/durandtibo/analora
