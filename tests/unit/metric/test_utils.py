@@ -4,16 +4,15 @@ import numpy as np
 import pytest
 from coola import objects_are_equal
 
+from analora.array.checking import check_same_shape, multi_isnan
 from analora.metric.utils import (
     check_array_ndim,
     check_label_type,
     check_nan_policy,
     check_nan_pred,
-    check_same_shape,
     check_same_shape_pred,
     check_same_shape_score,
     contains_nan,
-    multi_isnan,
     preprocess_pred,
     preprocess_pred_multilabel,
     preprocess_same_shape_arrays,
