@@ -24,24 +24,10 @@ class BaseContentGenerator(ABC):
 
     ```pycon
 
-    >>> import numpy as np
-    >>> from analora.content import AccuracyContentGenerator
-    >>> content = AccuracyContentGenerator(
-    ...     AccuracyEvaluator(
-    ...         AccuracyState(
-    ...             y_true=np.array([1, 0, 0, 1, 1]),
-    ...             y_pred=np.array([1, 0, 0, 1, 1]),
-    ...             y_true_name="target",
-    ...             y_pred_name="pred",
-    ...         )
-    ...     )
-    ... )
+    >>> from analora.content import ContentGenerator
+    >>> content = ContentGenerator("meow")
     >>> content
-    AccuracyContentGenerator(
-      (evaluator): AccuracyEvaluator(
-          (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
-        )
-    )
+    ContentGenerator()
 
     ```
     """
@@ -57,26 +43,10 @@ class BaseContentGenerator(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.content import AccuracyContentGenerator
-        >>> from analora.evaluator2 import AccuracyEvaluator
-        >>> from analora.state import AccuracyState
-        >>> content = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 1, 1]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
+        >>> from analora.content import ContentGenerator
+        >>> content = ContentGenerator("meow")
         >>> content
-        AccuracyContentGenerator(
-          (evaluator): AccuracyEvaluator(
-              (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
-            )
-        )
+        ContentGenerator()
         >>> content2 = content.compute()
         >>> content2
         ContentGenerator()
@@ -101,40 +71,10 @@ class BaseContentGenerator(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.content import AccuracyContentGenerator
-        >>> from analora.evaluator2 import AccuracyEvaluator
-        >>> from analora.state import AccuracyState
-        >>> content1 = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 1, 1]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
-        >>> content2 = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 1, 1]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
-        >>> content3 = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 0, 0]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
+        >>> from analora.content import ContentGenerator
+        >>> content1 = ContentGenerator("meow")
+        >>> content2 = ContentGenerator("meow")
+        >>> content3 = ContentGenerator("hello")
         >>> content1.equal(content2)
         True
         >>> content1.equal(content3)
@@ -159,20 +99,8 @@ class BaseContentGenerator(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.content import AccuracyContentGenerator
-        >>> from analora.evaluator2 import AccuracyEvaluator
-        >>> from analora.state import AccuracyState
-        >>> content = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 1, 1]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
+        >>> from analora.content import ContentGenerator
+        >>> content = ContentGenerator("meow")
         >>> content.generate_body()
 
         ```
@@ -199,20 +127,8 @@ class BaseContentGenerator(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.content import AccuracyContentGenerator
-        >>> from analora.evaluator2 import AccuracyEvaluator
-        >>> from analora.state import AccuracyState
-        >>> content = AccuracyContentGenerator(
-        ...     AccuracyEvaluator(
-        ...         AccuracyState(
-        ...             y_true=np.array([1, 0, 0, 1, 1]),
-        ...             y_pred=np.array([1, 0, 0, 1, 1]),
-        ...             y_true_name="target",
-        ...             y_pred_name="pred",
-        ...         )
-        ...     )
-        ... )
+        >>> from analora.content import ContentGenerator
+        >>> content = ContentGenerator("meow")
         >>> content.generate_toc()
 
         ```
