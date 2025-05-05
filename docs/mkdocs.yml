@@ -20,9 +20,13 @@ nav:
   - Home: index.md
   - Reference:
       - refs/array.md
+      - refs/content.md
+      - refs/evaluator.md
       - refs/ingestor.md
       - refs/metric.md
+      - refs/output.md
       - refs/plot.md
+      - refs/state.md
   - GitHub: https://github.com/durandtibo/analora
 
 repo_url: https://github.com/durandtibo/analora
