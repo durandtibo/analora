@@ -6,12 +6,14 @@ from coola import objects_are_allclose, objects_are_equal
 
 from analora.evaluator import AccuracyEvaluator, Evaluator
 from analora.state import AccuracyState
+from analora.testing import sklearn_available
 
 #######################################
 #     Tests for AccuracyEvaluator     #
 #######################################
 
 
+@sklearn_available
 def test_accuracy_evaluator_repr() -> None:
     assert repr(
         AccuracyEvaluator(
@@ -25,6 +27,7 @@ def test_accuracy_evaluator_repr() -> None:
     ).startswith("AccuracyEvaluator(")
 
 
+@sklearn_available
 def test_accuracy_evaluator_str() -> None:
     assert str(
         AccuracyEvaluator(
@@ -38,6 +41,7 @@ def test_accuracy_evaluator_str() -> None:
     ).startswith("AccuracyEvaluator(")
 
 
+@sklearn_available
 def test_accuracy_evaluator_state() -> None:
     assert AccuracyEvaluator(
         AccuracyState(
@@ -56,6 +60,7 @@ def test_accuracy_evaluator_state() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_equal_true() -> None:
     assert AccuracyEvaluator(
         AccuracyState(
@@ -76,6 +81,7 @@ def test_accuracy_evaluator_equal_true() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_equal_false_different_state() -> None:
     assert not AccuracyEvaluator(
         AccuracyState(
@@ -96,6 +102,7 @@ def test_accuracy_evaluator_equal_false_different_state() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_equal_false_different_type() -> None:
     assert not AccuracyEvaluator(
         AccuracyState(
@@ -107,6 +114,7 @@ def test_accuracy_evaluator_equal_false_different_type() -> None:
     ).equal(42)
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_binary_correct() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -122,6 +130,7 @@ def test_accuracy_evaluator_evaluate_binary_correct() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_binary_incorrect() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -137,6 +146,7 @@ def test_accuracy_evaluator_evaluate_binary_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_multiclass_correct() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -152,6 +162,7 @@ def test_accuracy_evaluator_evaluate_multiclass_correct() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_multiclass_incorrect() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -167,6 +178,7 @@ def test_accuracy_evaluator_evaluate_multiclass_incorrect() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_empty() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -189,6 +201,7 @@ def test_accuracy_evaluator_evaluate_empty() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_prefix_suffix() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -210,6 +223,7 @@ def test_accuracy_evaluator_evaluate_prefix_suffix() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_omit() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -226,6 +240,7 @@ def test_accuracy_evaluator_evaluate_nan_omit() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_omit_y_true() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -242,6 +257,7 @@ def test_accuracy_evaluator_evaluate_nan_omit_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_omit_y_pred() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -258,6 +274,7 @@ def test_accuracy_evaluator_evaluate_nan_omit_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_propagate() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -280,6 +297,7 @@ def test_accuracy_evaluator_evaluate_nan_propagate() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_propagate_y_true() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -302,6 +320,7 @@ def test_accuracy_evaluator_evaluate_nan_propagate_y_true() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_propagate_y_pred() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -324,6 +343,7 @@ def test_accuracy_evaluator_evaluate_nan_propagate_y_pred() -> None:
     )
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_raise() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -338,6 +358,7 @@ def test_accuracy_evaluator_evaluate_nan_raise() -> None:
         evaluator.evaluate()
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_raise_y_true() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -352,6 +373,7 @@ def test_accuracy_evaluator_evaluate_nan_raise_y_true() -> None:
         evaluator.evaluate()
 
 
+@sklearn_available
 def test_accuracy_evaluator_evaluate_nan_raise_y_pred() -> None:
     evaluator = AccuracyEvaluator(
         AccuracyState(
@@ -366,6 +388,7 @@ def test_accuracy_evaluator_evaluate_nan_raise_y_pred() -> None:
         evaluator.evaluate()
 
 
+@sklearn_available
 def test_accuracy_evaluator_compute() -> None:
     assert (
         AccuracyEvaluator(

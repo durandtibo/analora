@@ -8,6 +8,7 @@ __all__ = ["AccuracyEvaluator"]
 from analora.evaluator.state import BaseStateEvaluator
 from analora.metric import accuracy
 from analora.state.accuracy import AccuracyState
+from analora.utils.imports import check_sklearn
 
 
 class AccuracyEvaluator(BaseStateEvaluator[AccuracyState]):
@@ -41,6 +42,10 @@ class AccuracyEvaluator(BaseStateEvaluator[AccuracyState]):
 
     ```
     """
+
+    def __init__(self, state: AccuracyState) -> None:
+        super().__init__(state)
+        check_sklearn()
 
     def _evaluate(self) -> dict[str, float]:
         return accuracy(
