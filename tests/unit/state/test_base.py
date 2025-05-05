@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pytest
@@ -10,7 +11,6 @@ from coola.equality.testers import EqualityTester
 from analora.state import AccuracyState
 from analora.state.base import StateEqualityComparator
 from tests.unit.helpers import COMPARATOR_FUNCTIONS, ExamplePair
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Callable
