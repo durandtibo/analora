@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 import pytest
 from coola.equality import EqualityConfig
@@ -9,7 +10,6 @@ from coola.equality.testers import EqualityTester
 from analora.content import ContentGenerator
 from analora.content.base import ContentGeneratorEqualityComparator
 from tests.unit.helpers import COMPARATOR_FUNCTIONS, ExamplePair
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Callable
