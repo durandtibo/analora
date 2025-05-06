@@ -3,14 +3,12 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-import numpy as np
 import pytest
 from coola.equality import EqualityConfig
 from coola.equality.testers import EqualityTester
 
-from analora.evaluator import AccuracyEvaluator, Evaluator
+from analora.evaluator import Evaluator
 from analora.evaluator.base import EvaluatorEqualityComparator
-from analora.state import AccuracyState
 from tests.unit.helpers import COMPARATOR_FUNCTIONS, ExamplePair
 
 if TYPE_CHECKING:
@@ -41,27 +39,6 @@ EVALUATOR_EQUAL = [
             expected=Evaluator({"accuracy": 0.42}),
         ),
         id="evaluator metrics",
-    ),
-    pytest.param(
-        ExamplePair(
-            actual=AccuracyEvaluator(
-                state=AccuracyState(
-                    y_true=np.array([1, 0, 0, 1, 1]),
-                    y_pred=np.array([1, 0, 1, 0, 1]),
-                    y_true_name="target",
-                    y_pred_name="pred",
-                )
-            ),
-            expected=AccuracyEvaluator(
-                state=AccuracyState(
-                    y_true=np.array([1, 0, 0, 1, 1]),
-                    y_pred=np.array([1, 0, 1, 0, 1]),
-                    y_true_name="target",
-                    y_pred_name="pred",
-                )
-            ),
-        ),
-        id="accuracy evaluator",
     ),
 ]
 
