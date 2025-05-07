@@ -40,12 +40,40 @@ jobs:
         run: |
           python -c "import analora"
 
+      - name: check analora.array
+        run: |
+          python -c "from analora import array"
+
+      - name: check analora.content
+        run: |
+          python -c "from analora import content"
+
+      - name: check analora.evaluator
+        run: |
+          python -c "from analora import evaluator"
+
       - name: check analora.ingestor
         run: |
           python -c "from analora import ingestor"
       - name: check analora.ingestor.polars
         run: |
           python -c "from analora.ingestor import polars"
+
+      - name: check analora.metric
+        run: |
+          python -c "from analora import metric"
+
+      - name: check analora.output
+        run: |
+          python -c "from analora import output"
+
+      - name: check analora.plot
+        run: |
+          python -c "from analora import plot"
+
+      - name: check analora.state
+        run: |
+          python -c "from analora import state"
 
       - name: check analora.testing
         run: |
