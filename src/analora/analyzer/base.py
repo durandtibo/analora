@@ -6,20 +6,20 @@ __all__ = ["BaseAnalyzer", "is_analyzer_config", "setup_analyzer"]
 
 import logging
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
 
 if TYPE_CHECKING:
-    import polars as pl
-
     from analora.output import BaseOutput
+
+T = TypeVar("T")
 
 logger = logging.getLogger(__name__)
 
 
-class BaseAnalyzer(ABC, metaclass=AbstractFactory):
+class BaseAnalyzer(ABC, Generic[T], metaclass=AbstractFactory):
     r"""Define the base class to analyze a DataFrame.
 
     Example usage:
@@ -42,11 +42,11 @@ class BaseAnalyzer(ABC, metaclass=AbstractFactory):
     """
 
     @abstractmethod
-    def analyze(self, frame: pl.DataFrame, lazy: bool = True) -> BaseOutput:
-        r"""Analyze the DataFrame.
+    def analyze(self, data: T, lazy: bool = True) -> BaseOutput:
+        r"""Analyze the data.
 
         Args:
-            frame: The DataFrame to analyze.
+            data: The data to analyze.
             lazy: If ``True``, it forces the computation of the output,
                 otherwise it returns an output object that contains the
                 logic.
