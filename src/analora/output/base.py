@@ -25,21 +25,19 @@ class BaseOutput(ABC):
 
     ```pycon
 
-    >>> import numpy as np
-    >>> from analora.output import AccuracyOutput
-    >>> from analora.state import AccuracyState
-    >>> output = AccuracyOutput(
-    ...     AccuracyState(
-    ...         y_true=np.array([1, 0, 0, 1, 1]),
-    ...         y_pred=np.array([1, 0, 0, 1, 1]),
-    ...         y_true_name="target",
-    ...         y_pred_name="pred",
-    ...     )
-    ... )
+    >>> from analora.output import Output
+    >>> from analora.content import ContentGenerator
+    >>> from analora.evaluator import Evaluator
+    >>> output = Output(content=ContentGenerator("meow"), evaluator=Evaluator())
     >>> output
-    AccuracyOutput(
-      (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
+    Output(
+      (content): ContentGenerator()
+      (evaluator): Evaluator(count=0)
     )
+    >>> output.get_content_generator()
+    ContentGenerator()
+    >>> output.get_evaluator()
+    Evaluator(count=0)
 
     ```
     """
@@ -96,32 +94,13 @@ class BaseOutput(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.output import AccuracyOutput
-        >>> from analora.state import AccuracyState
-        >>> output1 = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 1, 1]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
-        ... )
-        >>> output2 = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 1, 1]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
-        ... )
-        >>> output3 = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 0, 0]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
+        >>> from analora.output import Output
+        >>> from analora.content import ContentGenerator
+        >>> from analora.evaluator import Evaluator
+        >>> output1 = Output(content=ContentGenerator("meow"), evaluator=Evaluator())
+        >>> output2 = Output(content=ContentGenerator("meow"), evaluator=Evaluator())
+        >>> output3 = Output(
+        ...     content=ContentGenerator("hello"), evaluator=Evaluator({"accuracy": 0.42})
         ... )
         >>> output1.equal(output2)
         True
@@ -147,23 +126,12 @@ class BaseOutput(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.output import AccuracyOutput
-        >>> from analora.state import AccuracyState
-        >>> output = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 1, 1]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
-        ... )
+        >>> from analora.output import Output
+        >>> from analora.content import ContentGenerator
+        >>> from analora.evaluator import Evaluator
+        >>> output = Output(content=ContentGenerator("meow"), evaluator=Evaluator())
         >>> output.get_content_generator()
-        AccuracyContentGenerator(
-          (evaluator): AccuracyEvaluator(
-              (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
-            )
-        )
+        ContentGenerator()
 
         ```
         """
@@ -184,23 +152,12 @@ class BaseOutput(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.output import AccuracyOutput
-        >>> from analora.state import AccuracyState
-        >>> output = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 1, 1]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
-        ... )
+        >>> from analora.output import Output
+        >>> from analora.content import ContentGenerator
+        >>> from analora.evaluator import Evaluator
+        >>> output = Output(content=ContentGenerator("meow"), evaluator=Evaluator())
         >>> output.get_evaluator()
-        AccuracyEvaluator(
-          (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
-        )
-
-        ```
+        Evaluator(count=0)
         """
 
 
