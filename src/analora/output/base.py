@@ -53,26 +53,17 @@ class BaseOutput(ABC):
 
         ```pycon
 
-        >>> import numpy as np
-        >>> from analora.output import AccuracyOutput
-        >>> from analora.state import AccuracyState
-        >>> output = AccuracyOutput(
-        ...     AccuracyState(
-        ...         y_true=np.array([1, 0, 0, 1, 1]),
-        ...         y_pred=np.array([1, 0, 0, 1, 1]),
-        ...         y_true_name="target",
-        ...         y_pred_name="pred",
-        ...     )
+        >>> from analora.output import Output
+        >>> from analora.content import ContentGenerator
+        >>> from analora.evaluator import Evaluator
+        >>> output = Output(
+        ...     content=ContentGenerator("meow"), evaluator=Evaluator({"accuracy": 0.42})
         ... )
-        >>> output
-        AccuracyOutput(
-          (state): AccuracyState(y_true=(5,), y_pred=(5,), y_true_name='target', y_pred_name='pred', nan_policy='propagate')
-        )
         >>> out = output.compute()
         >>> out
         Output(
           (content): ContentGenerator()
-          (evaluator): Evaluator(count=5)
+          (evaluator): Evaluator(count=1)
         )
 
         ```
