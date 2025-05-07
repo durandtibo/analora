@@ -52,9 +52,7 @@ OUTPUT_NOT_EQUAL = [
     pytest.param(
         ExamplePair(
             actual=Output(content=ContentGenerator("meow"), evaluator=Evaluator()),
-            expected=Output(
-                content=ContentGenerator("meow"), evaluator=Evaluator({"accuracy": 0.42})
-            ),
+            expected=Evaluator({"accuracy": 0.42}),
             expected_message="objects have different types:",
         ),
         id="different types",
