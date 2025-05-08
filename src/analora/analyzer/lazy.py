@@ -18,7 +18,7 @@ T = TypeVar("T")
 logger = logging.getLogger(__name__)
 
 
-class BaseLazyAnalyzer(BaseAnalyzer):
+class BaseLazyAnalyzer(BaseAnalyzer[T]):
     r"""Define a base class to implement a lazy analyzer.
 
     Example usage:
