@@ -6,7 +6,12 @@ from typing import TYPE_CHECKING
 
 from objectory import OBJECT_TARGET
 
-from analora.analyzer import AccuracyAnalyzer, is_analyzer_config, setup_analyzer
+from analora.analyzer import (
+    AccuracyAnalyzer,
+    ContentAnalyzer,
+    is_analyzer_config,
+    setup_analyzer,
+)
 
 if TYPE_CHECKING:
     import pytest
@@ -17,7 +22,7 @@ if TYPE_CHECKING:
 
 
 def test_is_analyzer_config_true() -> None:
-    assert is_analyzer_config({OBJECT_TARGET: "analora.analyzer.AccuracyAnalyzer"})
+    assert is_analyzer_config({OBJECT_TARGET: "analora.analyzer.ContentAnalyzer"})
 
 
 def test_is_analyzer_config_false() -> None:
@@ -36,14 +41,8 @@ def test_setup_analyzer_object() -> None:
 
 def test_setup_analyzer_dict() -> None:
     assert isinstance(
-        setup_analyzer(
-            {
-                OBJECT_TARGET: "analora.analyzer.AccuracyAnalyzer",
-                "y_true": "target",
-                "y_pred": "pred",
-            }
-        ),
-        AccuracyAnalyzer,
+        setup_analyzer({OBJECT_TARGET: "analora.analyzer.ContentAnalyzer", "content": "meow"}),
+        ContentAnalyzer,
     )
 
 
