@@ -15,6 +15,7 @@ from analora.content import ContentGenerator
 from analora.evaluator import AccuracyEvaluator
 from analora.output import Output
 from analora.state.accuracy import AccuracyState
+from analora.utils.imports import check_sklearn
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -73,6 +74,7 @@ class AccuracyAnalyzer(BaseTruePredAnalyzer):
         super().__init__(
             y_true=y_true, y_pred=y_pred, nan_policy=nan_policy, missing_policy=missing_policy
         )
+        check_sklearn()
 
     def __repr__(self) -> str:
         args = repr_mapping_line(
