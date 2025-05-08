@@ -19,6 +19,7 @@ theme:
 nav:
   - Home: index.md
   - Reference:
+      - refs/analyzer.md
       - refs/array.md
       - refs/content.md
       - refs/evaluator.md
