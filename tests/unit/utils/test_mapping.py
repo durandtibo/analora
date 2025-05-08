@@ -5,6 +5,7 @@ import warnings
 import pytest
 
 from analora.utils.mapping import (
+    check_missing_key,
     check_missing_keys,
     find_missing_keys,
 )
@@ -17,6 +18,37 @@ def data() -> dict:
         "key2": ["1", "2", "3", "4", "5"],
         "key3": ["a ", " b", "  c  ", "d", "e"],
     }
+
+
+#######################################
+#     Tests for check_missing_key     #
+#######################################
+
+
+@pytest.mark.parametrize("missing_policy", ["ignore", "raise", "warn"])
+def test_check_missing_key_data(data: dict, missing_policy: str) -> None:
+    check_missing_key(data, key="key1", missing_policy=missing_policy)
+
+
+@pytest.mark.parametrize("missing_policy", ["ignore", "raise", "warn"])
+def test_check_missing_key_keys(missing_policy: str) -> None:
+    check_missing_key(["key1", "key2", "key3", "key4"], key="key1", missing_policy=missing_policy)
+
+
+def test_check_missing_key_ignore(data: dict) -> None:
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        check_missing_key(data, key="key", missing_policy="ignore")
+
+
+def test_check_missing_key_raise(data: dict) -> None:
+    with pytest.raises(KeyError, match="key 'key' is missing in the data"):
+        check_missing_key(data, key="key", missing_policy="raise")
+
+
+def test_check_missing_key_warn(data: dict) -> None:
+    with pytest.warns(RuntimeWarning, match="key 'key' is missing in the data and will be ignored"):
+        check_missing_key(data, key="key", missing_policy="warn")
 
 
 ########################################

@@ -2,10 +2,58 @@ r"""Contain mapping utility functions."""
 
 from __future__ import annotations
 
+__all__ = ["check_missing_key", "check_missing_keys", "find_missing_keys"]
+
 import warnings
 from collections.abc import Mapping, Sequence
 
 from analora.utils.policy import check_missing_policy
+
+
+def check_missing_key(
+    mapping_or_keys: Mapping | Sequence, key: str, missing_policy: str = "raise"
+) -> None:
+    r"""Check if a key is missing.
+
+    Args:
+        mapping_or_keys: The mapping or its keys.
+        key: The key to check.
+        missing_policy: The policy on how to handle missing keys.
+            The following options are available: ``'ignore'``,
+            ``'warn'``, and ``'raise'``. If ``'raise'``, an exception
+            is raised if the key is missing. If ``'warn'``,
+            a warning is raised if the key is missing and the
+            missing keys are ignored. If ``'ignore'``, the missing
+            key is ignored and no warning message appears.
+
+    Raises:
+        ColumnNotFoundError: if the key is missing and
+            ``missing_policy='raise'``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from analora.utils.mapping import check_missing_key
+    >>> frame = {
+    ...     "key1": [1, 2, 3, 4, 5],
+    ...     "key2": ["1", "2", "3", "4", "5"],
+    ...     "key3": ["a ", " b", "  c  ", "d", "e"],
+    ...     "key4": ["a ", " b", "  c  ", "d", "e"],
+    ... }
+    >>> check_missing_key(frame, "key1", missing_policy="warn")
+
+    ```
+    """
+    check_missing_policy(missing_policy)
+    exist = key in mapping_or_keys
+    if exist:
+        return
+    msg = f"key {key!r} is missing in the data"
+    if missing_policy == "raise":
+        raise KeyError(msg)
+    if missing_policy == "warn":
+        warnings.warn(msg + " and will be ignored", RuntimeWarning, stacklevel=2)
 
 
 def check_missing_keys(
