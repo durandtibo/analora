@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from objectory import OBJECT_TARGET
 
 from analora.analyzer import (
-    AccuracyAnalyzer,
     ContentAnalyzer,
     is_analyzer_config,
     setup_analyzer,
@@ -35,7 +34,7 @@ def test_is_analyzer_config_false() -> None:
 
 
 def test_setup_analyzer_object() -> None:
-    analyzer = AccuracyAnalyzer(y_true="target", y_pred="pred")
+    analyzer = ContentAnalyzer("meow")
     assert setup_analyzer(analyzer) is analyzer
 
 
