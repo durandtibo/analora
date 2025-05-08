@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 from coola import objects_are_allclose, objects_are_equal
@@ -412,3 +414,16 @@ def test_accuracy_evaluator_compute() -> None:
             )
         )
     )
+
+
+@patch("analora.utils.imports.is_sklearn_available", lambda: False)
+def test_accuracy_evaluator_no_sklearn() -> None:
+    with pytest.raises(RuntimeError, match="'sklearn' package is required but not installed."):
+        AccuracyEvaluator(
+            AccuracyState(
+                y_true=np.array([1, 0, 0, 1, 1]),
+                y_pred=np.array([1, 0, 0, 1, 1]),
+                y_true_name="target",
+                y_pred_name="pred",
+            ),
+        )
