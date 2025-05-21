@@ -10,7 +10,6 @@ from analora.content import BaseSectionContentGenerator, ContentGenerator
 
 
 class MySectionContentGenerator(BaseSectionContentGenerator):
-
     def __init__(self, value: str) -> None:
         self._value = value
 

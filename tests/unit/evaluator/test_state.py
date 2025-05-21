@@ -9,7 +9,6 @@ from analora.state import AccuracyState, BaseState
 
 
 class MyStateCachedEvaluator(BaseStateEvaluator):
-
     def _evaluate(self) -> dict:
         return {"metric1": 0.42, "metric2": 1.2}
 
