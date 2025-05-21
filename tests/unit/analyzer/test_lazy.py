@@ -11,7 +11,6 @@ from analora.output import Output
 
 
 class MyLazyAnalyzer(BaseLazyAnalyzer):
-
     def _analyze(self, data: dict) -> Output:
         return Output(content=ContentGenerator("meow"), evaluator=Evaluator(data))
 
