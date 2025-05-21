@@ -14,7 +14,7 @@ from analora.analyzer.bases import BaseTruePredAnalyzer
 from analora.content import ContentGenerator
 from analora.evaluator import AccuracyEvaluator
 from analora.output import Output
-from analora.state.accuracy import AccuracyState
+from analora.state import AccuracyState
 from analora.utils.imports import check_sklearn
 
 if TYPE_CHECKING:
