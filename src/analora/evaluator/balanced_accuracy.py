@@ -7,7 +7,7 @@ __all__ = ["BalancedAccuracyEvaluator"]
 
 from analora.evaluator.state import BaseStateEvaluator
 from analora.metric import balanced_accuracy
-from analora.state.accuracy import AccuracyState
+from analora.state import AccuracyState
 from analora.utils.imports import check_sklearn
 
 
