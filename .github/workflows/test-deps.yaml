@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -38,7 +38,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'coola'
           package-version: ${{ matrix.coola-version }}
@@ -73,7 +73,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -87,7 +87,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'iden'
           package-version: ${{ matrix.iden-version }}
@@ -122,7 +122,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -136,7 +136,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'matplotlib'
           package-version: ${{ matrix.matplotlib-version }}
@@ -176,7 +176,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -190,7 +190,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'numpy'
           package-version: ${{ matrix.numpy-version }}
@@ -231,7 +231,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -245,7 +245,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'objectory'
           package-version: ${{ matrix.objectory-version }}
@@ -280,7 +280,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -294,7 +294,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'polars'
           package-version: ${{ matrix.polars-version }}
@@ -329,7 +329,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -343,7 +343,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'scikit-learn'
           package-version: ${{ matrix.scikit-learn-version }}
@@ -378,7 +378,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -392,7 +392,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'scipy'
           package-version: ${{ matrix.scipy-version }}
@@ -434,7 +434,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
           activate-environment: true
@@ -448,7 +448,7 @@ jobs:
           inv install --all-deps
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.4
+        uses: durandtibo/pip-install-package-action@v0.4.0
         with:
           package-name: 'torch'
           package-version: ${{ matrix.torch-version }}
