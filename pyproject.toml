@@ -51,14 +51,14 @@ torch = ["torch>=2.2.0"]
 
 [dependency-groups]
 dev = [
-    "black >=25.1",
+    "black>=26.3.1",
     "coverage[toml] >=7.7,<8.0",
     "docformatter[tomli] >=1.7,<2.0",
     "feu[cli,git] >=0.3.3,<1.0",
     "invoke >=2.2.0,<3.0",
     "pre-commit >=4.2,<5.0",
     "pygments >=2.19,<3.0",
-    "pytest>=8.3,<10.0",
+    "pytest>=9.0.3,<10.0",
     "pytest-cov>=6,<8",
     "pytest-timeout >=2.4,<3.0",
     "ruff >=0.11,<1.0",
