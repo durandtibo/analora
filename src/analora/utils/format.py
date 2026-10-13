@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __all__ = ["human_time", "str_kwargs"]
 
-import datetime
+import datetime as dt
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -70,7 +70,7 @@ def human_time(seconds: float) -> str:
 
     ```
     """
-    return str(datetime.timedelta(seconds=seconds))
+    return str(dt.timedelta(seconds=seconds))
 
 
 def str_kwargs(mapping: Mapping) -> str:
